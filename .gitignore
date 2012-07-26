@@ -14,6 +14,7 @@
 
 #idea files
 .idea/
+hp.iml
 
 # generated files
 bin/
