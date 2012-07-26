@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-public class WebViewInitiatorActivity extends Activity {
+public class WebviewInitiatorActivity extends Activity {
 
     private WebView customWebView;
 

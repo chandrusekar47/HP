@@ -7,9 +7,9 @@ import android.webkit.WebViewClient;
 
 public class CustomHpWebView extends WebViewClient {
 
-    private WebViewInitiatorActivity webViewActivity;
+    private WebviewInitiatorActivity webViewActivity;
 
-    public CustomHpWebView(WebViewInitiatorActivity activity) {
+    public CustomHpWebView(WebviewInitiatorActivity activity) {
         this.webViewActivity = activity;
     }
 
