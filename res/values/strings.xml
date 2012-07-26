@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">hp</string>
     <string name="web_view_initiator">WebView</string>
+    <string name="map_view">WebView</string>
 </resources>

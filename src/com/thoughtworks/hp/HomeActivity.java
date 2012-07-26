@@ -16,9 +16,8 @@ public class HomeActivity extends Activity
 
         Button webViewButton = (Button) findViewById(R.id.webview_button);
         webViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, WebviewInitiatorActivity.class));
+                startActivity(new Intent(HomeActivity.this, MapViewActivity.class));
             }
         });
     }
