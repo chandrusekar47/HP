@@ -1,5 +1,6 @@
 package com.thoughtworks.hp.datastore;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.*;
@@ -14,6 +15,7 @@ public class ProductTable implements Table<Product> {
     private static String TABLE_NAME = "PRODUCTS";
     private SQLiteOpenHelper database;
     private static String TAG = "com.thoughtworks.hp.datastore.ProductTable";
+    private static String productId = "id";
 
     public ProductTable(SQLiteOpenHelper database) {
         this.database = database;
@@ -21,8 +23,8 @@ public class ProductTable implements Table<Product> {
 
     private static class ProductCursor extends SQLiteCursor {
 
-        private static final String FIELD_LIST = " id, name, barcode_id, category";
-        private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
+        private static final String FIELD_LIST = " id, name, barcode_id, category, status";
+        private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME + " WHERE status = ?";
         private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE id = ?";
 
         public ProductCursor (SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -52,7 +54,11 @@ public class ProductTable implements Table<Product> {
         }
 
         public Product getProduct() {
-            return new Product(getProductId(), getName(), getBarcodeId(), getCategory());
+            return new Product(getProductId(), getName(), getBarcodeId(), getCategory(), getStatus());
+        }
+
+        public boolean getStatus(){
+            return Boolean.getBoolean(getString(getColumnIndexOrThrow("status")));
         }
     }
 
@@ -77,8 +83,8 @@ public class ProductTable implements Table<Product> {
         return productList;
     }
 
-    public List<Product> findAll() {
-        return findProduct(ProductCursor.ALL_QUERY, null);
+    public List<Product> findAll(boolean status) {
+        return findProduct(ProductCursor.ALL_QUERY,new String[] {String.valueOf(status)});
     }
 
     public Product findById(long id) {
@@ -86,4 +92,21 @@ public class ProductTable implements Table<Product> {
         List<Product> productList = findProduct(ProductCursor.ID_QUERY, new String[] {id_string});
         return (productList == null || productList.isEmpty()) ? null : productList.get(0);
     }
+
+    public void manageProductsList(ContentValues contentValues) {
+        Long id = (Long) contentValues.get(productId);
+        database.getWritableDatabase().update(TABLE_NAME, contentValues, "id =" + id, null);
+    }
+
+    public void addProduct(){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", 2L);
+        contentValues.put("name", "Sugar");
+        contentValues.put("category", "Groceries");
+        contentValues.put("barcode_id", "dummyValue");
+        contentValues.put("status", "true");
+        database.getWritableDatabase().insert("PRODUCTS", null, contentValues);
+
+    }
+
 }

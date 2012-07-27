@@ -13,9 +13,11 @@ public class FirstActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_screen);
     }
+
     public void creatingList(View view) {
         Intent intent=new Intent(this, CreatingListActivity.class);
         startActivity(intent);
     }
+
 }
 
