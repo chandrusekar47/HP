@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import com.thoughtworks.hp.activities.AddProductActivity;
 
 public class HomeActivity extends Activity
 {
@@ -18,6 +19,13 @@ public class HomeActivity extends Activity
         webViewButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, MapViewActivity.class));
+            }
+        });
+
+        Button addProductsButton = (Button) findViewById(R.id.add_products_button);
+        addProductsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, AddProductActivity.class));
             }
         });
     }

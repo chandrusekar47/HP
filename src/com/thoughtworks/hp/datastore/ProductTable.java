@@ -23,8 +23,8 @@ public class ProductTable implements Table<Product> {
 
     private static class ProductCursor extends SQLiteCursor {
 
-        private static final String FIELD_LIST = " id, name, barcode_id, category, status";
-        private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME + " WHERE status = ?";
+        private static final String FIELD_LIST = " id, name, barcode_id, category, cost, uom, status ";
+        private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME + " WHERE status = ?";;
         private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE id = ?";
 
         public ProductCursor (SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -53,12 +53,20 @@ public class ProductTable implements Table<Product> {
             return getString(getColumnIndexOrThrow("category"));
         }
 
-        public Product getProduct() {
-            return new Product(getProductId(), getName(), getBarcodeId(), getCategory(), getStatus());
+        private double getCost() {
+            return getDouble(getColumnIndexOrThrow("cost"));
+        }
+
+        private String getUOM() {
+            return getString(getColumnIndexOrThrow("uom"));
         }
 
         public boolean getStatus(){
             return Boolean.getBoolean(getString(getColumnIndexOrThrow("status")));
+        }
+
+        public Product getProduct() {
+            return new Product(getProductId(), getName(), getBarcodeId(), getCategory(), getStatus(), getCost(), getUOM());
         }
     }
 

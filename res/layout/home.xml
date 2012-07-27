@@ -23,6 +23,14 @@
                 android:layout_height="wrap_content"
             />
 
+        <Button android:id="@+id/add_products_button"
+                android:contentDescription="add_products_button"
+                android:text="Create List"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
     </TableLayout>
 </LinearLayout>
 
