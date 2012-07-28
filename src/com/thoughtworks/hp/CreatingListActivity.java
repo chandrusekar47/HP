@@ -2,13 +2,12 @@ package com.thoughtworks.hp;
 
 
 import android.app.Activity;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
-import com.thoughtworks.hp.datastore.HpDatabase;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 import com.thoughtworks.hp.datastore.ProductTable;
 import com.thoughtworks.hp.models.Product;
 
@@ -23,11 +22,9 @@ public class CreatingListActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_list_screen);
-        productTable=new ProductTable(new HpDatabase(getApplicationContext())) ;
-        productTable.addProduct();
         displayAddedProducts();
         AutoCompleteTextView textView= (AutoCompleteTextView) findViewById(R.id.productList);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,productTable.findAll(false));
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,productTable.findAll());
         textView.setAdapter(adapter);
         textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -44,15 +41,9 @@ public class CreatingListActivity extends Activity {
         textView.setText(buildStringFromProductList(true));
     }
 
-
-    public void addProduct(View view){
-
-    }
-
     public String buildStringFromProductList(boolean status){
-        int i=0;
         StringBuilder stringProduct = new StringBuilder();
-        List<Product> productList = productTable.findAll(status);
+        List<Product> productList = productTable.findAll();
         for(Product product: productList) {
              stringProduct.append(product.toString());
         }

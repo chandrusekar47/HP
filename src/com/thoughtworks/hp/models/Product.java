@@ -9,6 +9,7 @@ public class Product {
     private boolean status;
     private double cost;
     private String uom;
+    private static final String INDIAN_CURRENCY_SYMBOL = "Rs. ";
 
     public Product(long productId, String name, String barcodeId, String category, boolean status, double cost, String uom) {
         this.id = productId;
@@ -25,7 +26,7 @@ public class Product {
     }
 
     public String getCostAsString() {
-        return Double.toString(this.cost);
+        return INDIAN_CURRENCY_SYMBOL + Double.toString(this.cost);
     }
 
     public String getUom() {

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/add_product_component_wrapper"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
     <EditText android:id="@+id/searchBox"
               android:singleLine="true"
@@ -14,9 +16,21 @@
               android:textSize="18sp"
               android:hint="e.g. Tomato Ketchup" />
 
-    <ListView android:id="@id/android:list"
+    <ListView android:id="@+id/to_buy_product_view"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:layout_below="@id/searchBox"
+              android:layout_weight="1"
+              android:layout_marginLeft="10sp"
+              android:layout_marginRight="10sp"
+              android:layout_marginTop="0sp"
+              android:layout_marginBottom="0sp"
+              android:drawSelectorOnTop="false"/>
+
+    <ListView android:id="@+id/auto_suggest_list"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:layout_below="@id/searchBox"
               android:layout_weight="1"
               android:layout_marginLeft="10sp"
               android:layout_marginRight="10sp"
@@ -24,4 +38,6 @@
               android:layout_marginBottom="10sp"
               android:drawSelectorOnTop="false"/>
 
-</LinearLayout>
+
+
+</RelativeLayout>

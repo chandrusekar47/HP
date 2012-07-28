@@ -23,11 +23,6 @@ public class HpDatabase extends SQLiteOpenHelper {
         mContext = context;
     }
 
-    public HpDatabase(Context context, String name) {
-        super(context, (name == null ? DATABASE_NAME : name), null, DATABASE_VERSION);
-        mContext = context;
-    }
-
     @Override
     public void finalize() {
         super.close();
@@ -35,7 +30,7 @@ public class HpDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.e(TAG, "Creating Tribe database for first time");
+        Log.e(TAG, "Creating HP database for first time");
         String[] creationSqls = mContext.getString(R.string.create_sqls).split(";");
         try {
             executeManySqlStatements(db, creationSqls);

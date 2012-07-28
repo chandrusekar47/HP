@@ -16,6 +16,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
     private List<Product> productList = new ArrayList<Product>();
     private Context context;
+    private int layout;
 
     private static class ViewHolder {
         TextView productName;
@@ -23,16 +24,19 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         TextView productPrice;
     }
 
-    public ProductListAdapter(Context context, int textViewResourceId, List<Product> products) {
-        super(context, textViewResourceId, products);
+    public ProductListAdapter(Context context, int layout, List<Product> products) {
+        super(context, layout, products);
         this.context = context;
         this.productList = products;
+        this.layout = layout;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if(convertView == null) setTagWithViewHolder(convertView);
+        if(convertView == null) {
+            convertView = setTagWithViewHolder(convertView);
+        }
 
         holder = (ViewHolder) convertView.getTag();
 
@@ -53,16 +57,17 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         productUOMTextView.setText(product.getUom());
     }
 
-    private void setTagWithViewHolder(View convertView) {
+    private View setTagWithViewHolder(View convertView) {
         ViewHolder holder = new ViewHolder();
         LayoutInflater view = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = view.inflate(R.layout.product_line_item, null);
+        convertView = view.inflate(layout, null);
 
         holder.productName = (TextView) convertView.findViewById(R.id.product_name);
         holder.productPrice = (TextView) convertView.findViewById(R.id.product_price);
         holder.productUOM = (TextView) convertView.findViewById(R.id.product_uom);
 
         convertView.setTag(holder);
+        return convertView;
     }
 
 }

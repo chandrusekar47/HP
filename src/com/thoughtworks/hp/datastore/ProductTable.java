@@ -15,7 +15,6 @@ public class ProductTable implements Table<Product> {
     private static String TABLE_NAME = "PRODUCTS";
     private SQLiteOpenHelper database;
     private static String TAG = "com.thoughtworks.hp.datastore.ProductTable";
-    private static String productId = "id";
 
     public ProductTable(SQLiteOpenHelper database) {
         this.database = database;
@@ -24,8 +23,9 @@ public class ProductTable implements Table<Product> {
     private static class ProductCursor extends SQLiteCursor {
 
         private static final String FIELD_LIST = " id, name, barcode_id, category, cost, uom, status ";
-        private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME + " WHERE status = ?";;
+        private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
         private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE id = ?";
+        private static final String NAME_LIKE_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE name like ? ";
 
         public ProductCursor (SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
             super(db, driver, editTable, query);
@@ -91,8 +91,8 @@ public class ProductTable implements Table<Product> {
         return productList;
     }
 
-    public List<Product> findAll(boolean status) {
-        return findProduct(ProductCursor.ALL_QUERY,new String[] {String.valueOf(status)});
+    public List<Product> findAll() {
+        return findProduct(ProductCursor.ALL_QUERY, null);
     }
 
     public Product findById(long id) {
@@ -101,20 +101,8 @@ public class ProductTable implements Table<Product> {
         return (productList == null || productList.isEmpty()) ? null : productList.get(0);
     }
 
-    public void manageProductsList(ContentValues contentValues) {
-        Long id = (Long) contentValues.get(productId);
-        database.getWritableDatabase().update(TABLE_NAME, contentValues, "id =" + id, null);
-    }
-
-    public void addProduct(){
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("id", 2L);
-        contentValues.put("name", "Sugar");
-        contentValues.put("category", "Groceries");
-        contentValues.put("barcode_id", "dummyValue");
-        contentValues.put("status", "true");
-        database.getWritableDatabase().insert("PRODUCTS", null, contentValues);
-
+    public List<Product> findByMatchingName(String nameFragment) {
+        return findProduct(ProductCursor.NAME_LIKE_QUERY, new String[] {"%" + nameFragment + "%"});
     }
 
 }
