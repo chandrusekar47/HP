@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.thoughtworks.hp.activities.AddProductActivity;
+import com.thoughtworks.hp.activities.ShoppingListListingActivity;
 
 public class HomeActivity extends Activity
 {
@@ -25,7 +26,7 @@ public class HomeActivity extends Activity
         Button addProductsButton = (Button) findViewById(R.id.add_products_button);
         addProductsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, AddProductActivity.class));
+                startActivity(new Intent(HomeActivity.this, ShoppingListListingActivity.class));
             }
         });
     }

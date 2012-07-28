@@ -29,6 +29,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
     private ProductListAdapter productListAdapter;
     private List<Product> toBuyProductList = new ArrayList<Product>();
 
+    private ListView autoSuggestListView;
+
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -50,8 +52,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
     }
 
     private void initDependencies() {
-        this.database = new HpDatabase(this);
-        this.productTable = new ProductTable(this.database);
+        this.database = HpDatabase.database(getApplicationContext());
+        this.productTable = new ProductTable(database);
     }
 
     private void initToBuyListView() {
@@ -62,7 +64,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
     private void initAutoSuggestListView() {
         this.autoSuggestAdapter = new ProductListAdapter(this, R.layout.product_auto_suggest_line_item, autoSuggestedProductList);
-        ListView autoSuggestListView = (ListView) this.findViewById(R.id.auto_suggest_list);
+        this.autoSuggestListView = (ListView) this.findViewById(R.id.auto_suggest_list);
         autoSuggestListView.setAdapter(this.autoSuggestAdapter);
         autoSuggestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -72,7 +74,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
                 autoSuggestedProductList.clear();
                 autoSuggestAdapter.notifyDataSetChanged();
                 ((EditText)AddProductActivity.this.findViewById(R.id.searchBox)).setText("");
-
+                autoSuggestListView.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -88,6 +90,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
         if (charSequence == null || charSequence.length() < 1) return;
+        autoSuggestListView.setVisibility(View.VISIBLE);
         autoSuggestedProductList.clear();
         autoSuggestedProductList.addAll(findMatchingProducts(charSequence.toString()));
         autoSuggestAdapter.notifyDataSetChanged();

@@ -18,9 +18,16 @@ public class HpDatabase extends SQLiteOpenHelper {
     private static final String TAG = "com.thoughtworks.hp.datastore.HpDatabase";
     private final Context mContext;
 
-    public HpDatabase(Context context) {
+    private static HpDatabase singleInstanceOfDatabase;
+
+    private HpDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
+    }
+
+    public static HpDatabase database(Context context) {
+        if(singleInstanceOfDatabase == null) singleInstanceOfDatabase = new HpDatabase(context);
+        return singleInstanceOfDatabase;
     }
 
     @Override
