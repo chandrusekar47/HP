@@ -32,8 +32,10 @@ public class HpDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.e(TAG, "Creating HP database for first time");
         String[] creationSqls = mContext.getString(R.string.create_sqls).split(";");
+        String[] dataSqls = mContext.getString(R.string.seed_data).split(";");
+        db.beginTransaction();
         try {
-            executeManySqlStatements(db, creationSqls);
+            executeManySqlStatements(db, combinedSqls(creationSqls, dataSqls));
             db.setTransactionSuccessful();
         } catch(SQLException e) {
             Log.e(TAG, "Error occurred while creating database. Error is " + e.getMessage());
@@ -42,8 +44,15 @@ public class HpDatabase extends SQLiteOpenHelper {
         }
     }
 
-    private void executeManySqlStatements(SQLiteDatabase db, String[] creationSqls) {
-        for (String eachStatement : creationSqls) {
+    private String[] combinedSqls(String[] creationSqls, String[] dataSqls) {
+        String[] combinedSqls = new String[creationSqls.length + dataSqls.length];
+        System.arraycopy(creationSqls, 0, combinedSqls, 0, creationSqls.length);
+        System.arraycopy(dataSqls, 0, combinedSqls, creationSqls.length, dataSqls.length);
+        return combinedSqls;
+    }
+
+    private void executeManySqlStatements(SQLiteDatabase db, String[] sqls) {
+        for (String eachStatement : sqls) {
             if(eachStatement.trim().length() > 0)
                 db.execSQL(eachStatement);
         }

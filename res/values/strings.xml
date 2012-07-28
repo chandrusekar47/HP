@@ -9,11 +9,11 @@
         CREATE TABLE PRODUCTS ( id integer primary key, name String, barcode_id String, category String, cost Numeric, uom String, status text );
     </string>
     <string name="seed_data">
-        insert into products (name, barcode_id, category, cost, uom, status) values("Baby Oil", "1231", "oil", 50.45, "1 lt.", "true");
-        insert into products (name, barcode_id, category, cost, uom, status) values("Sunflower Oil", "1232", "oil", 150.15, "1 lt.", "true");
-        insert into products (name, barcode_id, category, cost, uom, status) values("Parle G Biscuits", "1233", "snacks", 5.00, "1 packet", "true");
-        insert into products (name, barcode_id, category, cost, uom, status) values("Tomato Ketchup Sauce", "1234", "snacks", 45.35, "1 lt. Bottle", "true");
-        insert into products (name, barcode_id, category, cost, uom, status) values("Olive Oil", "1235", "oils", 500.15, "1 lt. Can", "true");
-        insert into products (name, barcode_id, category, cost, uom, status) values("Perry Sugar", "1236", "condiments", 30.00, "1 kg. packet", "true");
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Baby Oil\', \'1231\', \'oil\', 50.45, \'1 lt.\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Sunflower Oil\', \'1232\', \'oil\', 150.15, \'1 lt.\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Parle G Biscuits\', \'1233\', \'snacks\', 5.00, \'1 packet\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Tomato Ketchup\', \'1234\', \'snacks\', 45.35, \'1 lt. Bottle\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Olive Oil\', \'1235\', \'oils\', 500.15, \'1 lt. Can\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Perry Sugar\', \'1236\', \'condiments\', 30.00, \'1 kg. packet\', \'true\');
     </string>
 </resources>
