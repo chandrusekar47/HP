@@ -6,14 +6,17 @@ public class ShoppingList {
 
     private long id;
     private String name;
-    private List<Product> products;
 
-    public ShoppingList(long id, String name, List<Product> products) {
-        this.name = name;
-        this.products = products;
+    public ShoppingList(long id, String name) {
+        this.id = id;
+        this.name = ((name == null || name.trim().length() == 0) ? "New List" : name);
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

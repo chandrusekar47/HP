@@ -1,5 +1,6 @@
 package com.thoughtworks.hp.datastore;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -46,7 +47,7 @@ public class ShoppingListTable implements Table<ShoppingList> {
         }
 
         public ShoppingList getShoppingList() {
-            return new ShoppingList(getShoppingListId(), getShoppingListName(), null);
+            return new ShoppingList(getShoppingListId(), getShoppingListName());
         }
     }
 
@@ -83,5 +84,23 @@ public class ShoppingListTable implements Table<ShoppingList> {
 
     public List<ShoppingList> findByMatchingName(String nameFragment) {
         return findShoppingList(ShoppingListCursor.NAME_QUERY, new String[]{nameFragment});
+    }
+
+    public ShoppingList create(ShoppingList newShoppingList) {
+        if (newShoppingList != null) {
+            database.getWritableDatabase().beginTransaction();
+            try {
+                ContentValues dbValues = new ContentValues();
+                dbValues.put("name", newShoppingList.getName());
+                long id = database.getWritableDatabase().insertOrThrow(TABLE_NAME, "name", dbValues);
+                newShoppingList.setId(id);
+                database.getWritableDatabase().setTransactionSuccessful();
+            } catch (SQLException sqle) {
+                Log.e(TAG, "Could not create new shopping list. Exception is :" + sqle.getMessage());
+            } finally {
+                database.getWritableDatabase().endTransaction();
+            }
+        }
+        return newShoppingList;
     }
 }

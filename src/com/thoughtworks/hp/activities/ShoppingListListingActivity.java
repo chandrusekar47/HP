@@ -1,7 +1,11 @@
 package com.thoughtworks.hp.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ShoppingListListingAdapter;
@@ -26,6 +30,7 @@ public class ShoppingListListingActivity extends Activity {
         setContentView(R.layout.shopping_list_listing);
 
         initDependencies();
+        bindEventsToAddNewList();
         initListingView();
     }
 
@@ -53,5 +58,22 @@ public class ShoppingListListingActivity extends Activity {
     private void updateAllShoppingLists() {
         shoppingLists.clear();
         shoppingLists.addAll(shoppingListTable.findAll());
+    }
+
+    private void bindEventsToAddNewList() {
+        ImageView addNewShoppingListButton = (ImageView) this.findViewById(R.id.add_new_shopping_list_button);
+        addNewShoppingListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //All of this needs to move to a separate thread, which is not on main. Will do that soon.
+                String newListName = ((EditText) ShoppingListListingActivity.this.findViewById(R.id.shopping_list_name)).getText().toString();
+                ShoppingList newShoppingList = new ShoppingList(-1, newListName);
+                shoppingListTable.create(newShoppingList);
+
+                Intent addItemsToShoppingList = new Intent(ShoppingListListingActivity.this, AddProductActivity.class);
+                startActivity(addItemsToShoppingList);
+            }
+        });
+
     }
 }
