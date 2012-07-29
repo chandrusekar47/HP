@@ -59,4 +59,10 @@ public class ShoppingListListingAdapter extends ArrayAdapter<ShoppingList> {
         TextView shoppingListName = holder.shoppingListName;
         shoppingListName.setText(shoppingList.getName());
     }
+
+
+    @Override
+    public int getCount() {
+        return shoppingLists.size();
+    }
 }

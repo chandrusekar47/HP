@@ -70,4 +70,9 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         return convertView;
     }
 
+    @Override
+    public int getCount() {
+        return productList.size();
+    }
+
 }
