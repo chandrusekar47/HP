@@ -121,7 +121,12 @@ public class AddProductActivity extends Activity implements TextWatcher {
         autoSuggestListView.setVisibility(View.VISIBLE);
         autoSuggestedProductList.clear();
         autoSuggestedProductList.addAll(findMatchingProducts(charSequence.toString()));
+        clearAlreadyAddedProductsFrom(autoSuggestedProductList);
         autoSuggestAdapter.notifyDataSetChanged();
+    }
+
+    private void clearAlreadyAddedProductsFrom(List<Product> autoSuggestedProductList) {
+        autoSuggestedProductList.removeAll(this.toBuyProductList);
     }
 
     @Override

@@ -41,6 +41,21 @@ public class Product {
     public long getId() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if(this == other) return true;
+        if(other == null || !(other instanceof Product)) return false;
+
+        Product otherProduct = (Product) other;
+        if(this.id == otherProduct.id) return true;
+        if(this.name.equals(otherProduct.name) &&
+           this.category.equals(otherProduct.category) &&
+           this.barcodeId.equals(otherProduct.barcodeId) &&
+           this.uom.equals(otherProduct.uom)) return true;
+
+        return false;
+    }
 }
 
 
