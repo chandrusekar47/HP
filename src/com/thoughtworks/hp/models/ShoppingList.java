@@ -1,8 +1,8 @@
 package com.thoughtworks.hp.models;
 
-import java.util.List;
-
 public class ShoppingList {
+
+    public static final String SHOPPING_LIST_ID = "SHOPPING_LIST_ID";
 
     private long id;
     private String name;
@@ -18,5 +18,9 @@ public class ShoppingList {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getId() {
+        return id;
     }
 }

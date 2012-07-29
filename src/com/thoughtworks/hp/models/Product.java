@@ -37,6 +37,10 @@ public class Product {
     public String toString(){
         return name;
     }
+
+    public long getId() {
+        return id;
+    }
 }
 
 

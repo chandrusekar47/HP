@@ -13,7 +13,10 @@ import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ProductListAdapter;
 import com.thoughtworks.hp.datastore.HpDatabase;
 import com.thoughtworks.hp.datastore.ProductTable;
+import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 import com.thoughtworks.hp.models.Product;
+import com.thoughtworks.hp.models.ShoppingList;
+import com.thoughtworks.hp.models.ShoppingListProduct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,20 +24,24 @@ import java.util.List;
 public class AddProductActivity extends Activity implements TextWatcher {
 
     private ProductTable productTable;
+    private ShoppingListProductTable shoppingListProductTable;
     private SQLiteOpenHelper database;
 
     private ProductListAdapter autoSuggestAdapter;
     private List<Product> autoSuggestedProductList = new ArrayList<Product>();
 
     private ProductListAdapter productListAdapter;
-    private List<Product> toBuyProductList = new ArrayList<Product>();
+    private List<Product> toBuyProductList;
 
     private ListView autoSuggestListView;
+    private long shoppingListId;
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.add_product);
+
+        this.shoppingListId = getIntent().getLongExtra(ShoppingList.SHOPPING_LIST_ID, 1);
 
         initDependencies();
         initToBuyListView();
@@ -54,12 +61,18 @@ public class AddProductActivity extends Activity implements TextWatcher {
     private void initDependencies() {
         this.database = HpDatabase.database(getApplicationContext());
         this.productTable = new ProductTable(database);
+        this.shoppingListProductTable = new ShoppingListProductTable(this.database);
     }
 
     private void initToBuyListView() {
+        this.toBuyProductList = this.shoppingListId > 0 ? fetchProductsForShoppingList() : new ArrayList<Product>();
         this.productListAdapter = new ProductListAdapter(this, R.layout.product_line_item, toBuyProductList);
         ListView toBuyProductListView = (ListView) this.findViewById(R.id.to_buy_product_view);
         toBuyProductListView.setAdapter(this.productListAdapter);
+    }
+
+    private List<Product> fetchProductsForShoppingList() {
+        return productTable.findByShoppingList(this.shoppingListId);
     }
 
     private void initAutoSuggestListView() {
@@ -69,14 +82,28 @@ public class AddProductActivity extends Activity implements TextWatcher {
         autoSuggestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                toBuyProductList.add(autoSuggestedProductList.get(position));
-                productListAdapter.notifyDataSetChanged();
-                autoSuggestedProductList.clear();
-                autoSuggestAdapter.notifyDataSetChanged();
-                ((EditText)AddProductActivity.this.findViewById(R.id.searchBox)).setText("");
-                autoSuggestListView.setVisibility(View.INVISIBLE);
+                addSelectedProductToListing(position);
+                saveSelectedProductToShoppingList(position);
+                resetAutoSuggestList();
             }
         });
+    }
+
+    private void saveSelectedProductToShoppingList(int position) {
+        ShoppingListProduct newShoppingListProduct = new ShoppingListProduct(autoSuggestedProductList.get(position).getId(), this.shoppingListId);
+        this.shoppingListProductTable.create(newShoppingListProduct);
+    }
+
+    private void addSelectedProductToListing(int position) {
+        toBuyProductList.add(autoSuggestedProductList.get(position));
+        productListAdapter.notifyDataSetChanged();
+    }
+
+    private void resetAutoSuggestList() {
+        autoSuggestedProductList.clear();
+        autoSuggestAdapter.notifyDataSetChanged();
+        ((EditText)AddProductActivity.this.findViewById(R.id.searchBox)).setText("");
+        autoSuggestListView.setVisibility(View.INVISIBLE);
     }
 
     private List<Product> findMatchingProducts(String nameFragment) {
@@ -90,6 +117,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
         if (charSequence == null || charSequence.length() < 1) return;
+
         autoSuggestListView.setVisibility(View.VISIBLE);
         autoSuggestedProductList.clear();
         autoSuggestedProductList.addAll(findMatchingProducts(charSequence.toString()));

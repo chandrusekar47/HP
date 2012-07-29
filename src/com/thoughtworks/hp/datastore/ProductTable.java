@@ -26,6 +26,9 @@ public class ProductTable implements Table<Product> {
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
         private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE id = ?";
         private static final String NAME_LIKE_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE name like ? ";
+        private static final String SHOPPING_LIST_QUERY = "SELECT P.* FROM "+ TABLE_NAME + " as P,"
+                                                          + ShoppingListProductTable.TABLE_NAME
+                                                          + " AS SLP WHERE SLP.shopping_list_id = ? AND SLP.product_id = P.id ";
 
         public ProductCursor (SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
             super(db, driver, editTable, query);
@@ -103,6 +106,10 @@ public class ProductTable implements Table<Product> {
 
     public List<Product> findByMatchingName(String nameFragment) {
         return findProduct(ProductCursor.NAME_LIKE_QUERY, new String[] {"%" + nameFragment + "%"});
+    }
+
+    public List<Product> findByShoppingList(long shoppingListId) {
+        return findProduct(ProductCursor.SHOPPING_LIST_QUERY, new String[] {Long.toString(shoppingListId)});
     }
 
 }

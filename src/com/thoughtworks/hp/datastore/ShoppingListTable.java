@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ShoppingListTable implements Table<ShoppingList> {
 
-    private static String TABLE_NAME = "SHOPPING_LISTS";
+    public static final String TABLE_NAME = "SHOPPING_LISTS";
     private SQLiteOpenHelper database;
     private static String TAG = "com.thoughtworks.hp.datastore.ShoppingListTable";
 
@@ -82,10 +82,6 @@ public class ShoppingListTable implements Table<ShoppingList> {
         return (shoppingLists == null || shoppingLists.isEmpty()) ? null : shoppingLists.get(0);
     }
 
-    public List<ShoppingList> findByMatchingName(String nameFragment) {
-        return findShoppingList(ShoppingListCursor.NAME_QUERY, new String[]{nameFragment});
-    }
-
     public ShoppingList create(ShoppingList newShoppingList) {
         if (newShoppingList != null) {
             database.getWritableDatabase().beginTransaction();
@@ -103,4 +99,5 @@ public class ShoppingListTable implements Table<ShoppingList> {
         }
         return newShoppingList;
     }
+
 }

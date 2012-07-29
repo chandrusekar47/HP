@@ -9,6 +9,7 @@
         DROP TABLE IF EXISTS SHOPPING_LISTS;
         CREATE TABLE PRODUCTS ( id integer primary key, name String, barcode_id String, category String, cost Numeric, uom String, status text );
         CREATE TABLE SHOPPING_LISTS ( id integer primary key, name String );
+        CREATE TABLE SHOPPING_LIST_PRODUCT_MAPPINGS (shopping_list_id integer, product_id integer, PRIMARY KEY (shopping_list_id, product_id));
     </string>
     <string name="seed_data">
         insert into products (name, barcode_id, category, cost, uom, status) values(\'Baby Oil\', \'1231\', \'oil\', 50.45, \'1 lt.\', \'true\');
