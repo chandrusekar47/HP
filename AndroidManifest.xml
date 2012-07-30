@@ -5,7 +5,7 @@
           android:versionName="1.0">
 
     <uses-sdk android:minSdkVersion="8"/>
-    <application android:label="@string/app_name" android:icon="@drawable/hypercity">
+    <application android:label="@string/app_name" android:icon="@drawable/hypercity" android:name=".HypercityApplication">
 
         <activity android:name=".FirstActivity" android:configChanges="orientation" />
 

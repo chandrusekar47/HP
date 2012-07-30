@@ -1,10 +1,10 @@
 package com.thoughtworks.hp.datastore;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.*;
 import android.util.Log;
+import com.thoughtworks.hp.HypercityApplication;
 import com.thoughtworks.hp.models.Product;
 
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ public class ProductTable implements Table<Product> {
 
     private static String TABLE_NAME = "PRODUCTS";
     private SQLiteOpenHelper database;
-    private static String TAG = "com.thoughtworks.hp.datastore.ProductTable";
+    private static String TAG = ProductTable.class.getSimpleName();
 
-    public ProductTable(SQLiteOpenHelper database) {
-        this.database = database;
+    public ProductTable() {
+        this.database = new HypercityApplication().database();
     }
 
     private static class ProductCursor extends SQLiteCursor {

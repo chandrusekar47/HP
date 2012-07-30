@@ -2,7 +2,6 @@ package com.thoughtworks.hp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +13,6 @@ import android.widget.ListView;
 import com.thoughtworks.hp.MapViewActivity;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ProductListAdapter;
-import com.thoughtworks.hp.datastore.HpDatabase;
 import com.thoughtworks.hp.datastore.ProductTable;
 import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 import com.thoughtworks.hp.models.Product;
@@ -29,7 +27,6 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
     private ProductTable productTable;
     private ShoppingListProductTable shoppingListProductTable;
-    private SQLiteOpenHelper database;
 
     private ProductListAdapter autoSuggestAdapter;
     private List<Product> autoSuggestedProductList = new ArrayList<Product>();
@@ -68,19 +65,9 @@ public class AddProductActivity extends Activity implements TextWatcher {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        try {}
-        finally {
-            if(this.database != null) this.database.close();
-        }
-    }
-
     private void initDependencies() {
-        this.database = HpDatabase.database(getApplicationContext());
-        this.productTable = new ProductTable(database);
-        this.shoppingListProductTable = new ShoppingListProductTable(this.database);
+        this.productTable = new ProductTable();
+        this.shoppingListProductTable = new ShoppingListProductTable();
     }
 
     private void initToBuyListView() {

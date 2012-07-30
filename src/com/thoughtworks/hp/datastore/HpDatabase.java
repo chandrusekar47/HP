@@ -1,32 +1,29 @@
 package com.thoughtworks.hp.datastore;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.thoughtworks.hp.R;
-import com.thoughtworks.hp.models.Product;
 
 public class HpDatabase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "HP";
 
     private static final int DATABASE_VERSION = 3;
-    private static final String TAG = "com.thoughtworks.hp.datastore.HpDatabase";
-    private final Context mContext;
+    private static final String TAG = HpDatabase.class.getSimpleName();
+    private Context mContext;
 
     private static HpDatabase singleInstanceOfDatabase;
 
-    private HpDatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        mContext = context;
+    private HpDatabase(Context mContext) {
+        super(mContext, DATABASE_NAME, null, DATABASE_VERSION);
+        this.mContext = mContext;
     }
 
-    public static HpDatabase database(Context context) {
-        if(singleInstanceOfDatabase == null) singleInstanceOfDatabase = new HpDatabase(context);
+    public static HpDatabase database(Context mContext) {
+        if(singleInstanceOfDatabase == null) singleInstanceOfDatabase = new HpDatabase(mContext);
         return singleInstanceOfDatabase;
     }
 

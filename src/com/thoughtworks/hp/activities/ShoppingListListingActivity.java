@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ShoppingListListingAdapter;
-import com.thoughtworks.hp.datastore.HpDatabase;
 import com.thoughtworks.hp.datastore.ShoppingListTable;
 import com.thoughtworks.hp.models.ShoppingList;
 
@@ -19,7 +18,6 @@ import java.util.List;
 
 public class ShoppingListListingActivity extends Activity {
 
-    private HpDatabase database;
     private ShoppingListTable shoppingListTable;
     private ListView shoppingListsListingView;
     private ShoppingListListingAdapter shoppingListListingAdapter;
@@ -35,18 +33,8 @@ public class ShoppingListListingActivity extends Activity {
         initListingView();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        try {}
-        finally {
-            if(this.database != null) this.database.close();
-        }
-    }
-
     private void initDependencies() {
-        this.database = HpDatabase.database(getApplicationContext());
-        this.shoppingListTable = new ShoppingListTable(this.database);
+        this.shoppingListTable = new ShoppingListTable();
     }
 
     private void initListingView() {

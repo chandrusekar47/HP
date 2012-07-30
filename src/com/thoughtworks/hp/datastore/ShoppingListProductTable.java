@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.*;
 import android.util.Log;
+import com.thoughtworks.hp.HypercityApplication;
 import com.thoughtworks.hp.models.ShoppingListProduct;
 
 import java.util.ArrayList;
@@ -14,17 +15,16 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
 
     public static final String TABLE_NAME = "SHOPPING_LIST_PRODUCT_MAPPINGS";
     private SQLiteOpenHelper database;
-    private static String TAG = "com.thoughtworks.hp.datastore.ShoppingListProductTable";
+    private static String TAG = ShoppingListProduct.class.getSimpleName();
 
-    public ShoppingListProductTable(SQLiteOpenHelper database) {
-        this.database = database;
+    public ShoppingListProductTable() {
+        this.database = new HypercityApplication().database();
     }
 
     private static class ShoppingListProductCursor extends SQLiteCursor {
 
         private static final String FIELD_LIST = " product_id, shopping_list_id ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
-        private static final String SHOPPING_LIST_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE shopping_list_id = ?";
 
         public ShoppingListProductCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
             super(db, driver, editTable, query);

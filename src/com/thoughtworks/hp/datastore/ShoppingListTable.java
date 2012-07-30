@@ -1,11 +1,11 @@
 package com.thoughtworks.hp.datastore;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.*;
 import android.util.Log;
+import com.thoughtworks.hp.HypercityApplication;
 import com.thoughtworks.hp.models.ShoppingList;
 
 import java.util.ArrayList;
@@ -15,10 +15,10 @@ public class ShoppingListTable implements Table<ShoppingList> {
 
     public static final String TABLE_NAME = "SHOPPING_LISTS";
     private SQLiteOpenHelper database;
-    private static String TAG = "com.thoughtworks.hp.datastore.ShoppingListTable";
+    private static String TAG = ShoppingListTable.class.getSimpleName();
 
-    public ShoppingListTable(SQLiteOpenHelper database) {
-        this.database = database;
+    public ShoppingListTable() {
+        this.database = new HypercityApplication().database();
     }
 
     private static class ShoppingListCursor extends SQLiteCursor {
@@ -26,7 +26,6 @@ public class ShoppingListTable implements Table<ShoppingList> {
         private static final String FIELD_LIST = " id, name ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
         private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE id = ?";
-        private static final String NAME_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE name = ? ";
 
         public ShoppingListCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
             super(db, driver, editTable, query);
