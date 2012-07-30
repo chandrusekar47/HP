@@ -6,14 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
-import com.thoughtworks.hp.HomeActivity;
 import com.thoughtworks.hp.MapViewActivity;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ProductListAdapter;
@@ -23,8 +20,6 @@ import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 import com.thoughtworks.hp.models.Product;
 import com.thoughtworks.hp.models.ShoppingList;
 import com.thoughtworks.hp.models.ShoppingListProduct;
-import com.thoughtworks.hp.zxing.integration.android.IntentIntegrator;
-import com.thoughtworks.hp.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,7 +39,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
     private ListView autoSuggestListView;
     private long shoppingListId;
-    private static final String TAG = "com.thoughtworks.hp.activities.AddProductActivity";
+
+    private BarcodeScanner barcodeScanner;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -54,28 +50,21 @@ public class AddProductActivity extends Activity implements TextWatcher {
         this.shoppingListId = getIntent().getLongExtra(ShoppingList.SHOPPING_LIST_ID, 1);
 
         initDependencies();
-        bindScanningEvents();
+        bindBarcodeScanner();
         initToBuyListView();
         initAutoSuggestListView();
         initMapIt();
         attachSelfAsTextWatcherToSearchBox();
     }
 
-    private void bindScanningEvents() {
-        Button scanButton = (Button) this.findViewById(R.id.scan_button);
-        scanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                IntentIntegrator scanIntent = new IntentIntegrator(AddProductActivity.this);
-                scanIntent.initiateScan();
-            }
-        });
+    private void bindBarcodeScanner() {
+        barcodeScanner = new BarcodeScanner(this, (Button) this.findViewById(R.id.scan_button));
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
-            Log.d(TAG, "Found Scan Result as " + scanResult.getContents());
+        Product productFromBarcode = barcodeScanner.fetchProductFromBarcodeData(requestCode, resultCode, intent);
+        if(productFromBarcode != null) {
+            addAndPersistProductInShoppingList(productFromBarcode);
         }
     }
 
@@ -112,12 +101,17 @@ public class AddProductActivity extends Activity implements TextWatcher {
         autoSuggestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                addSelectedProductToListing(position);
-                saveSelectedProductToShoppingList(position);
-                resetAutoSuggestList();
-                initMapIt();
+                Product product = autoSuggestedProductList.get(position);
+                addAndPersistProductInShoppingList(product);
             }
         });
+    }
+
+    private void addAndPersistProductInShoppingList(Product product) {
+        addSelectedProductToListing(product);
+        saveSelectedProductToShoppingList(product);
+        resetAutoSuggestList();
+        initMapIt();
     }
 
     private void initMapIt(){
@@ -144,13 +138,13 @@ public class AddProductActivity extends Activity implements TextWatcher {
     	return json.toString();
     }
 
-    private void saveSelectedProductToShoppingList(int position) {
-        ShoppingListProduct newShoppingListProduct = new ShoppingListProduct(autoSuggestedProductList.get(position).getId(), this.shoppingListId);
+    private void saveSelectedProductToShoppingList(Product product) {
+        ShoppingListProduct newShoppingListProduct = new ShoppingListProduct(product.getId(), this.shoppingListId);
         this.shoppingListProductTable.create(newShoppingListProduct);
     }
 
-    private void addSelectedProductToListing(int position) {
-        toBuyProductList.add(autoSuggestedProductList.get(position));
+    private void addSelectedProductToListing(Product product) {
+        toBuyProductList.add(product);
         productListAdapter.notifyDataSetChanged();
     }
 

@@ -16,7 +16,7 @@
         insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Sunflower Oil\', \'1232\', \'oil\', 150.15, \'1 lt.\', \'true\', \'230\', \'450\');
         insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Parle G Biscuits\', \'1233\', \'snacks\', 5.00, \'1 packet\', \'true\', \'140\', \'250\');
         insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Tomato Ketchup\', \'1234\', \'snacks\', 45.35, \'1 lt. Bottle\', \'true\', \'120\', \'200\');
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Olive Oil\', \'1235\', \'oils\', 500.15, \'1 lt. Can\', \'true\',\'120\', \'560\');
+        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Chanakyas Chant\', \'9789380658674\', \'oils\', 500.15, \'1 lt. Can\', \'true\',\'120\', \'560\');
         insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Perry Sugar\', \'1236\', \'condiments\', 30.00, \'1 kg. packet\', \'true\',\'270\', \'270\');
     </string>
 </resources>

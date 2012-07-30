@@ -29,6 +29,7 @@ public class ProductTable implements Table<Product> {
         private static final String SHOPPING_LIST_QUERY = "SELECT P.* FROM "+ TABLE_NAME + " as P,"
                                                           + ShoppingListProductTable.TABLE_NAME
                                                           + " AS SLP WHERE SLP.shopping_list_id = ? AND SLP.product_id = P.id ";
+        public static final String BARCODE_ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE barcode_id = ? ";
 
         public ProductCursor (SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
             super(db, driver, editTable, query);
@@ -118,6 +119,11 @@ public class ProductTable implements Table<Product> {
 
     public List<Product> findByShoppingList(long shoppingListId) {
         return findProduct(ProductCursor.SHOPPING_LIST_QUERY, new String[] {Long.toString(shoppingListId)});
+    }
+
+    public Product findByBarcodeId(String barcodeId) {
+        List<Product> products = findProduct(ProductCursor.BARCODE_ID_QUERY, new String[]{barcodeId});
+        return ((products != null && products.size() > 0) ? products.get(0) : null );
     }
 
 }
