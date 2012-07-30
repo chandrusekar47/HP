@@ -24,6 +24,7 @@ import com.thoughtworks.hp.models.ShoppingList;
 import com.thoughtworks.hp.models.ShoppingListProduct;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AddProductActivity extends Activity implements TextWatcher {
@@ -91,6 +92,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
                 addSelectedProductToListing(position);
                 saveSelectedProductToShoppingList(position);
                 resetAutoSuggestList();
+                initMapIt();
             }
         });
     }
@@ -109,7 +111,14 @@ public class AddProductActivity extends Activity implements TextWatcher {
     }
 
     private String getProductsJSON(){
-    	return "{'Baby Oil' : '70,40', 'Sun Flower' : '270,40', 'paste' : '70,480'}";
+    	Iterator<Product> productIterator = toBuyProductList.iterator();
+    	StringBuffer json = new StringBuffer("{");
+    	while(productIterator.hasNext()){
+    		Product product = productIterator.next();
+    		json.append("'" + product.getName() + "':'" + product.getCordinates() + "',");
+    	}
+    	json.append("}");
+    	return json.toString();
     }
 
     private void saveSelectedProductToShoppingList(int position) {

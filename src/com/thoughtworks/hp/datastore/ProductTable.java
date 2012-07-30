@@ -22,7 +22,7 @@ public class ProductTable implements Table<Product> {
 
     private static class ProductCursor extends SQLiteCursor {
 
-        private static final String FIELD_LIST = " id, name, barcode_id, category, cost, uom, status ";
+        private static final String FIELD_LIST = " id, name, barcode_id, category, cost, uom, status, x_pos, y_pos ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
         private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE id = ?";
         private static final String NAME_LIKE_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE name like ? ";
@@ -61,15 +61,23 @@ public class ProductTable implements Table<Product> {
         }
 
         private String getUOM() {
-            return getString(getColumnIndexOrThrow("uom"));
+			return getString(getColumnIndexOrThrow("uom"));
         }
 
         public boolean getStatus(){
             return Boolean.getBoolean(getString(getColumnIndexOrThrow("status")));
         }
+        
+        public String getXPos(){
+        	return getString(getColumnIndexOrThrow("x_pos"));
+        }
+
+        public String getYPos(){
+        	return getString(getColumnIndexOrThrow("y_pos"));
+        }
 
         public Product getProduct() {
-            return new Product(getProductId(), getName(), getBarcodeId(), getCategory(), getStatus(), getCost(), getUOM());
+            return new Product(getProductId(), getName(), getBarcodeId(), getCategory(), getStatus(), getCost(), getUOM(), getXPos(), getYPos());
         }
     }
 

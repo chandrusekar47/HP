@@ -14,7 +14,7 @@ public class HpDatabase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "HP";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String TAG = "com.thoughtworks.hp.datastore.HpDatabase";
     private final Context mContext;
 
