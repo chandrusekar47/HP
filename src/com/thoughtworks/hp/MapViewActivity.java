@@ -18,7 +18,8 @@ public class MapViewActivity extends Activity {
         customWebView.setWebViewClient(new CustomHpWebView(this));
         customWebView.getSettings().setJavaScriptEnabled(true);
         customWebView.addJavascriptInterface(new CustomJavaScriptInterface(this), "AndroidJS");
-        customWebView.loadUrl("http://sheltered-hollows-2894.herokuapp.com/indoor_map");
+        String json = getIntent().getExtras().getString("json");
+        customWebView.loadUrl("http://sheltered-hollows-2894.herokuapp.com/indoor_map?item_details=" + json);
     }
 
 }

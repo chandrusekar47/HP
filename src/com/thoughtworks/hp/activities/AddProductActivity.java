@@ -1,14 +1,19 @@
 package com.thoughtworks.hp.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.thoughtworks.hp.HomeActivity;
+import com.thoughtworks.hp.MapViewActivity;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ProductListAdapter;
 import com.thoughtworks.hp.datastore.HpDatabase;
@@ -46,6 +51,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
         initDependencies();
         initToBuyListView();
         initAutoSuggestListView();
+        initMapIt();
         attachSelfAsTextWatcherToSearchBox();
     }
 
@@ -87,6 +93,23 @@ public class AddProductActivity extends Activity implements TextWatcher {
                 resetAutoSuggestList();
             }
         });
+    }
+
+    private void initMapIt(){
+    	Button mapIt = ((Button)this.findViewById(R.id.map_it));
+    	mapIt.setOnClickListener(new View.OnClickListener() {
+    	String mapItJson = getProductsJSON();
+			@Override
+			public void onClick(View view) {
+				Intent mapIntent = new Intent(AddProductActivity.this, MapViewActivity.class);
+				mapIntent.putExtra("json", mapItJson);
+				startActivity(mapIntent);
+			}
+		});
+    }
+
+    private String getProductsJSON(){
+    	return "{'Baby Oil' : '70,40', 'Sun Flower' : '270,40', 'paste' : '70,480'}";
     }
 
     private void saveSelectedProductToShoppingList(int position) {

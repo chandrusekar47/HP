@@ -38,6 +38,18 @@
               android:layout_marginBottom="10sp"
               android:drawSelectorOnTop="false"/>
 
-
+    <Button
+        android:id="@+id/map_it"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/searchBox"
+        android:layout_alignBottom="@+id/searchBox"
+        android:layout_alignParentRight="true"
+                      android:layout_weight="1"
+              android:layout_marginLeft="10sp"
+              android:layout_marginRight="10sp"
+              android:layout_marginTop="0sp"
+              android:layout_marginBottom="10sp"
+        android:text="Map It" />
 
 </RelativeLayout>
