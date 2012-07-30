@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import com.thoughtworks.hp.activities.AddProductActivity;
 import com.thoughtworks.hp.activities.ShoppingListListingActivity;
+import com.thoughtworks.hp.zxing.integration.android.IntentIntegrator;
 
 public class HomeActivity extends Activity
 {

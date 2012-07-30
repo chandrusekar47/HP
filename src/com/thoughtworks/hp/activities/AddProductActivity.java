@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,6 +23,8 @@ import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 import com.thoughtworks.hp.models.Product;
 import com.thoughtworks.hp.models.ShoppingList;
 import com.thoughtworks.hp.models.ShoppingListProduct;
+import com.thoughtworks.hp.zxing.integration.android.IntentIntegrator;
+import com.thoughtworks.hp.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -41,6 +44,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
     private ListView autoSuggestListView;
     private long shoppingListId;
+    private static final String TAG = "com.thoughtworks.hp.activities.AddProductActivity";
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -50,10 +54,29 @@ public class AddProductActivity extends Activity implements TextWatcher {
         this.shoppingListId = getIntent().getLongExtra(ShoppingList.SHOPPING_LIST_ID, 1);
 
         initDependencies();
+        bindScanningEvents();
         initToBuyListView();
         initAutoSuggestListView();
         initMapIt();
         attachSelfAsTextWatcherToSearchBox();
+    }
+
+    private void bindScanningEvents() {
+        Button scanButton = (Button) this.findViewById(R.id.scan_button);
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentIntegrator scanIntent = new IntentIntegrator(AddProductActivity.this);
+                scanIntent.initiateScan();
+            }
+        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+            Log.d(TAG, "Found Scan Result as " + scanResult.getContents());
+        }
     }
 
     @Override
