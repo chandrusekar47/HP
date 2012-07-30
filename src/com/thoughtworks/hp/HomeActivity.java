@@ -17,12 +17,12 @@ public class HomeActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        Button webViewButton = (Button) findViewById(R.id.webview_button);
-        webViewButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, MapViewActivity.class));
-            }
-        });
+//        Button webViewButton = (Button) findViewById(R.id.webview_button);
+//        webViewButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                startActivity(new Intent(HomeActivity.this, MapViewActivity.class));
+//            }
+//        });
 
         Button addProductsButton = (Button) findViewById(R.id.add_products_button);
         addProductsButton.setOnClickListener(new View.OnClickListener() {
