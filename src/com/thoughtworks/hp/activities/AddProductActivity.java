@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import com.thoughtworks.hp.MapViewActivity;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ProductListAdapter;
 import com.thoughtworks.hp.datastore.ProductTable;
@@ -50,7 +49,6 @@ public class AddProductActivity extends Activity implements TextWatcher {
         bindBarcodeScanner();
         initToBuyListView();
         initAutoSuggestListView();
-        initMapIt();
         attachSelfAsTextWatcherToSearchBox();
     }
 
@@ -98,20 +96,6 @@ public class AddProductActivity extends Activity implements TextWatcher {
         addSelectedProductToListing(product);
         saveSelectedProductToShoppingList(product);
         resetAutoSuggestList();
-        initMapIt();
-    }
-
-    private void initMapIt(){
-    	Button mapIt = ((Button)this.findViewById(R.id.map_it));
-    	mapIt.setOnClickListener(new View.OnClickListener() {
-    	String mapItJson = getProductsJSON();
-			@Override
-			public void onClick(View view) {
-				Intent mapIntent = new Intent(AddProductActivity.this, MapViewActivity.class);
-				mapIntent.putExtra("json", mapItJson);
-				startActivity(mapIntent);
-			}
-		});
     }
 
     private String getProductsJSON(){

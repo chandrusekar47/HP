@@ -15,13 +15,6 @@
                  android:layout_centerInParent="true"
                  android:gravity="center_vertical">
 
-        <Button android:id="@+id/webview_button"
-                android:contentDescription="webview_button"
-                android:text="Go to Web View"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-            />
 
         <Button android:id="@+id/add_products_button"
                 android:contentDescription="add_products_button"

@@ -78,7 +78,12 @@ public class ShoppingListListingActivity extends Activity {
         shoppingListTable.create(newShoppingList);
 
         updateListingView();
+        clearListNameTextBox();
         startActivityToAddProductsToShoppingListWith(newShoppingList.getId());
+    }
+
+    private void clearListNameTextBox() {
+        ((EditText) ShoppingListListingActivity.this.findViewById(R.id.shopping_list_name)).setText("");
     }
 
     private void startActivityToAddProductsToShoppingListWith(long id) {
