@@ -7,18 +7,19 @@
     <string name="create_sqls">
         DROP TABLE IF EXISTS PRODUCTS;
         DROP TABLE IF EXISTS SHOPPING_LISTS;
-        CREATE TABLE PRODUCTS ( id integer primary key, name String, barcode_id String, category String, cost Numeric, uom String, status text, x_pos String, y_pos String );
+        DROP TABLE IF EXISTS SHOPPING_LIST_PRODUCT_MAPPINGS;
+        CREATE TABLE PRODUCTS ( id integer primary key, name String, barcode_id String, category String, cost Numeric, uom String, status text);
         CREATE TABLE SHOPPING_LISTS ( id integer primary key, name String );
         CREATE TABLE SHOPPING_LIST_PRODUCT_MAPPINGS (shopping_list_id integer, product_id integer, PRIMARY KEY (shopping_list_id, product_id));
     </string>
     <string name="seed_data">
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Baby Oil\', \'1231\', \'oil\', 50.45, \'1 lt.\', \'true\', \'230\', \'350\');
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Sunflower Oil\', \'1232\', \'oil\', 150.15, \'1 lt.\', \'true\', \'230\', \'450\');
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Parle G Biscuits\', \'1233\', \'snacks\', 5.00, \'1 packet\', \'true\', \'140\', \'250\');
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Tomato Ketchup\', \'1234\', \'snacks\', 45.35, \'1 lt. Bottle\', \'true\', \'120\', \'200\');
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Chanakyas Chant\', \'9789380658674\', \'oils\', 500.15, \'1 lt. Can\', \'true\',\'120\', \'560\');
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Perry Sugar\', \'1236\', \'condiments\', 30.00, \'1 kg. packet\', \'true\',\'270\', \'270\');
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Cleen Tissues\', \'8904064240032\', \'toiletries\', 15.00, \'1 Box\', \'true\',\'270\', \'270\');
-        insert into products (name, barcode_id, category, cost, uom, status, x_pos, y_pos) values(\'Ruby Cookbook\', \'9788184041804\', \'book\', 650.00, \'1 Book\', \'true\',\'270\', \'270\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Baby Oil\', \'1231\', \'oil\', 50.45, \'1 lt.\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Sunflower Oil\', \'1232\', \'oil\', 150.15, \'1 lt.\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Parle G Biscuits\', \'1233\', \'snacks\', 5.00, \'1 packet\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Tomato Ketchup\', \'1234\', \'snacks\', 45.35, \'1 lt. Bottle\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Chanakyas Chant\', \'9789380658674\', \'oils\', 500.15, \'1 lt. Can\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Perry Sugar\', \'1236\', \'condiments\', 30.00, \'1 kg. packet\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Cleen Tissues\', \'8904064240032\', \'toiletries\', 15.00, \'1 Box\', \'true\');
+        insert into products (name, barcode_id, category, cost, uom, status) values(\'Ruby Cookbook\', \'9788184041804\', \'book\', 650.00, \'1 Book\', \'true\');
     </string>
 </resources>

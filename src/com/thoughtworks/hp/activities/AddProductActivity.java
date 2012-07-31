@@ -98,17 +98,6 @@ public class AddProductActivity extends Activity implements TextWatcher {
         resetAutoSuggestList();
     }
 
-    private String getProductsJSON(){
-    	Iterator<Product> productIterator = toBuyProductList.iterator();
-    	StringBuffer json = new StringBuffer("{");
-    	while(productIterator.hasNext()){
-    		Product product = productIterator.next();
-    		json.append("'" + product.getName() + "':'" + product.getCordinates() + "',");
-    	}
-    	json.append("}");
-    	return json.toString();
-    }
-
     private void saveSelectedProductToShoppingList(Product product) {
         ShoppingListProduct newShoppingListProduct = new ShoppingListProduct(product.getId(), this.shoppingListId);
         this.shoppingListProductTable.create(newShoppingListProduct);

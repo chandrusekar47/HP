@@ -10,10 +10,8 @@ public class Product {
     private double cost;
     private String uom;
     private static final String INDIAN_CURRENCY_SYMBOL = "Rs. ";
-    private String xPos;
-    private String yPos;
 
-    public Product(long productId, String name, String barcodeId, String category, boolean status, double cost, String uom, String xPos, String yPos) {
+    public Product(long productId, String name, String barcodeId, String category, boolean status, double cost, String uom) {
         this.id = productId;
         this.name = name;
         this.barcodeId = barcodeId;
@@ -21,8 +19,6 @@ public class Product {
         this.status = status;
         this.cost = cost;
         this.uom = uom;
-        this.xPos = xPos;
-        this.yPos = yPos;
     }
 
     public String getName() {
@@ -44,10 +40,6 @@ public class Product {
 
     public long getId() {
         return id;
-    }
-    
-    public String getCordinates(){
-    	return xPos + "," + yPos;
     }
 
     @Override
