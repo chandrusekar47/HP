@@ -4,7 +4,9 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="8" />
+    <uses-sdk android:minSdkVersion="9"/>
+    <application android:label="@string/app_name" android:icon="@drawable/hypercity" android:name=".HypercityApplication" android:debuggable="true">
+
 
     <uses-permission android:name="android.permission.VIBRATE" />
 

@@ -88,7 +88,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
             int quantity =  shoppingListProductTable.findOnProductAndShoppingList(this.shoppingListId, product.getId());
             if(quantity >0){
                 productsQuantityIndex.put(product, quantity);
-                cost += product.getPrice() * quantity;
+                cost += Math.round(product.getPrice() * quantity);
             }
         }
         products = new ArrayList<Product>(productsQuantityIndex.keySet());
@@ -120,6 +120,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Product product = autoSuggestedProductList.get(position);
                 addAndPersistProductInShoppingList(product);
+                Toast toast = Toast.makeText(getBaseContext(), "Click on the added item to change the quantity", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }

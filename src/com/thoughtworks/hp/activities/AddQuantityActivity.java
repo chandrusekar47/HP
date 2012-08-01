@@ -12,6 +12,7 @@ import com.thoughtworks.hp.models.ShoppingList;
 
 public class AddQuantityActivity extends Activity {
 
+    EditText editText;
     private long productId;
     private long shoppingListId;
     private ShoppingListProductTable shoppingListProductTable;
@@ -25,22 +26,27 @@ public class AddQuantityActivity extends Activity {
         shoppingListId = getIntent().getLongExtra("Shopping_list_id", 0L);
     }
 
+    private int getValue() {
+        editText = (EditText) findViewById(R.id.quantity_value);
+        int quantity = Integer.parseInt(editText.getText().toString());
+        if(quantity < 0)
+            quantity = 0;
+        return quantity;
+    }
     public void incrementQuantity(View view) {
-        EditText editText = (EditText) findViewById(R.id.quantity_value);
-        int quantity  = Integer.parseInt(editText.getText().toString()) +1 ;
+        int quantity = getValue() +1;
         editText.setText(String.valueOf(quantity));
     }
 
     public void decrementQuantity(View view) {
         EditText editText = (EditText) findViewById(R.id.quantity_value);
-        int quantity  = Integer.parseInt(editText.getText().toString()) -1 ;
+        int quantity = getValue()!=0 ? getValue()-1 : 0;
         editText.setText(String.valueOf(quantity));
     }
 
     @Override
     public void onBackPressed() {
-        EditText editText = (EditText) findViewById(R.id.quantity_value);
-        int quantity  = Integer.parseInt(editText.getText().toString());
+        int quantity = getValue();
         shoppingListProductTable.updateQuantityForProduct(productId,quantity);
         Intent intent = new Intent(AddQuantityActivity.this, AddProductActivity.class);
         intent.putExtra(ShoppingList.SHOPPING_LIST_ID, shoppingListId);

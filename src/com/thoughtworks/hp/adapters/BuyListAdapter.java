@@ -57,7 +57,7 @@ public class BuyListAdapter extends ArrayAdapter<Product> {
         productNameTextView.setText(product.getName());
 
         TextView productCostTextView = holder.productPrice;
-        String costAsString = INDIAN_CURRENCY_SYMBOL + Double.toString(product.getPrice() * quantity);
+        String costAsString = INDIAN_CURRENCY_SYMBOL + Double.toString(Math.round(product.getPrice() * quantity));
         productCostTextView.setText(costAsString);
 
         TextView productUOMTextView = holder.productUOM;
