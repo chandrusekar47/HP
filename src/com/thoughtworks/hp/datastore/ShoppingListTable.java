@@ -23,7 +23,7 @@ public class ShoppingListTable implements Table<ShoppingList> {
 
     private static class ShoppingListCursor extends SQLiteCursor {
 
-        private static final String FIELD_LIST = " id, name ";
+        private static final String FIELD_LIST = " id, name, cost ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
         private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE id = ?";
 
@@ -43,6 +43,10 @@ public class ShoppingListTable implements Table<ShoppingList> {
 
         private String getShoppingListName() {
             return getString(getColumnIndexOrThrow("name"));
+        }
+
+        public double getShoppingListCost() {
+            return getDouble(getColumnIndexOrThrow("cost"));
         }
 
         public ShoppingList getShoppingList() {
@@ -97,6 +101,10 @@ public class ShoppingListTable implements Table<ShoppingList> {
             }
         }
         return newShoppingList;
+    }
+
+    public void calculateCost() {
+
     }
 
 }

@@ -19,6 +19,7 @@ public class BuyListAdapter extends ArrayAdapter<Product> {
     private List<Product> productList = new ArrayList<Product>();
     private Context context;
     private int layout;
+    private static final String INDIAN_CURRENCY_SYMBOL = "Rs. ";
 
     private static class ViewHolder {
         TextView productName;
@@ -56,7 +57,8 @@ public class BuyListAdapter extends ArrayAdapter<Product> {
         productNameTextView.setText(product.getName());
 
         TextView productCostTextView = holder.productPrice;
-        productCostTextView.setText(product.getCostAsString());
+        String costAsString = INDIAN_CURRENCY_SYMBOL + Double.toString(product.getPrice() * quantity);
+        productCostTextView.setText(costAsString);
 
         TextView productUOMTextView = holder.productUOM;
         productUOMTextView.setText(product.getUom());

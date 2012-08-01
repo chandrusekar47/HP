@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.AutoSuggestListAdapter;
 import com.thoughtworks.hp.adapters.BuyListAdapter;
@@ -32,7 +29,6 @@ public class AddProductActivity extends Activity implements TextWatcher {
     private AutoSuggestListAdapter autoSuggestAdapter;
     private List<Product> autoSuggestedProductList = new ArrayList<Product>();
 
-
     private BuyListAdapter buyListAdapter;
     private List<Product> toBuyProductList;
 
@@ -41,8 +37,11 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
     private BarcodeScanner barcodeScanner;
 
+    private TextView costOfShoppingList;
+
     private HashMap<Product, Integer> productsQuantityIndex;
     private List<Product> products;
+    private double cost;
 
 
     @Override
@@ -54,9 +53,15 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
         initDependencies();
         bindBarcodeScanner();
-        initAutoSuggestListView();
         initToBuyListView();
+        initAutoSuggestListView();
+        initCostOfShoppingList();
         attachSelfAsTextWatcherToSearchBox();
+    }
+
+    private void initCostOfShoppingList() {
+        costOfShoppingList = (TextView) findViewById(R.id.cost_of_shopping_list);
+        costOfShoppingList.setText(String.valueOf(cost));
     }
 
     private void bindBarcodeScanner() {
@@ -78,13 +83,14 @@ public class AddProductActivity extends Activity implements TextWatcher {
     private void initToBuyListView() {
         this.toBuyProductList = fetchProductsForShoppingList()!= null? fetchProductsForShoppingList() : new ArrayList<Product>();
         this.productsQuantityIndex = new HashMap<Product, Integer>();
+        cost=0;
         for(Product product : toBuyProductList){
             int quantity =  shoppingListProductTable.findOnProductAndShoppingList(this.shoppingListId, product.getId());
             if(quantity >0){
                 productsQuantityIndex.put(product, quantity);
+                cost += product.getPrice() * quantity;
             }
         }
-
         products = new ArrayList<Product>(productsQuantityIndex.keySet());
         this.buyListAdapter = new BuyListAdapter(this, R.layout.product_line_item,  productsQuantityIndex, products);
         ListView toBuyProductListView = (ListView) this.findViewById(R.id.to_buy_product_view);
@@ -134,6 +140,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
         int quantity =  shoppingListProductTable.findOnProductAndShoppingList(this.shoppingListId, product.getId());
         productsQuantityIndex.put(product, quantity);
         products.add(product);
+        cost+=product.getPrice();
         buyListAdapter.notifyDataSetChanged();
     }
 
@@ -142,6 +149,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
         autoSuggestAdapter.notifyDataSetChanged();
         ((EditText)AddProductActivity.this.findViewById(R.id.searchBox)).setText("");
         autoSuggestListView.setVisibility(View.INVISIBLE);
+        initCostOfShoppingList();
     }
 
     private List<Product> findMatchingProducts(String nameFragment) {

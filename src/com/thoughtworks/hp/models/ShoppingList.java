@@ -6,6 +6,7 @@ public class ShoppingList {
 
     private long id;
     private String name;
+    private double costOfShoppingList;
 
     public ShoppingList(long id, String name) {
         this.id = id;
