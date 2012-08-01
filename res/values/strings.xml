@@ -22,4 +22,10 @@
         insert into products (name, barcode_id, category, price, uom, status) values(\'Cleen Tissues\', \'8904064240032\', \'toiletries\', 15.00, \'1 Box\', \'true\');
         insert into products (name, barcode_id, category, price, uom, status) values(\'Ruby Cookbook\', \'9788184041804\', \'book\', 650.00, \'1 Book\', \'true\');
     </string>
+    
+    <string name="instructions">Drag a promo of your choice to the shopping basket</string>
+    <string name="hello">Add an image. Then drag it onto the grid.</string>
+    <integer name="num_images">18</integer>
+    <integer name="num_columns">3</integer>
+    
 </resources>
