@@ -68,12 +68,12 @@ public class AddProductActivity extends Activity implements TextWatcher {
         barcodeScanner = new BarcodeScanner(this, (Button) this.findViewById(R.id.scan_button));
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Product productFromBarcode = barcodeScanner.fetchProductFromBarcodeData(requestCode, resultCode, intent);
-        if(productFromBarcode != null) {
-            addAndPersistProductInShoppingList(productFromBarcode);
-        }
-    }
+//    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        Product productFromBarcode = barcodeScanner.fetchProductFromBarcodeData(requestCode, resultCode, intent);
+//        if(productFromBarcode != null) {
+//            addAndPersistProductInShoppingList(productFromBarcode);
+//        }
+//    }
 
     private void initDependencies() {
         this.productTable = new ProductTable();
@@ -102,9 +102,14 @@ public class AddProductActivity extends Activity implements TextWatcher {
                 Intent intent = new Intent(AddProductActivity.this, AddQuantityActivity.class);
                 intent.putExtra("product_id", product.getId());
                 intent.putExtra("Shopping_list_id", shoppingListId);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
+    }
+
+    protected void onActivityResult(int req, int res, Intent data) {
+        finish();
+        startActivity(this.getIntent());
     }
 
     private List<Product> fetchProductsForShoppingList() {
