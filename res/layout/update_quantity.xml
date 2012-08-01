@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+    <TextView android:id="@+id/quantity"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Quantity"
+              android:textSize="25sp"
+              android:layout_marginLeft="12px"
+              android:layout_marginTop="20px"/>
+    <ImageButton android:src="@drawable/minus"
+                 android:id="@+id/decrement"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_toRightOf="@id/quantity"
+                 android:onClick="decrementQuantity"/>
+    <EditText android:id="@+id/quantity_value"
+              android:layout_width="60px"
+              android:layout_height="wrap_content"
+              android:layout_toRightOf="@id/decrement"
+              android:text="1"/>
+
+    <ImageButton android:src="@drawable/symbol_add"
+                 android:id="@+id/increment"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_toRightOf="@id/quantity_value"
+                 android:onClick="incrementQuantity"/>
+
+
+</RelativeLayout>

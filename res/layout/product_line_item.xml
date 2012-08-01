@@ -30,14 +30,22 @@
                   android:layout_width="fill_parent"
                   android:gravity="right"
                   android:layout_marginRight="10dp"
-                  android:layout_height="fill_parent"
+                  android:layout_height="wrap_content"
                   android:orientation="vertical" >
         <TextView
                 android:id="@+id/product_price"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dip"
+                android:textSize="15sp" />
+        <TextView
+                android:id="@+id/product_quantity"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dip"
-                android:textSize="20sp"/>
+                android:textSize="10sp"/>
+
     </LinearLayout>
 </LinearLayout>

@@ -25,6 +25,7 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
 
         private static final String FIELD_LIST = " product_id, shopping_list_id ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
+        public static String FIND_BY_PRODUCT_AND_QUANTITY= "SELECT quantity FROM "+ TABLE_NAME+ " WHERE product_id=? AND shopping_list_id = ?";
 
         public ShoppingListProductCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
             super(db, driver, editTable, query);
@@ -44,9 +45,14 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
             return getLong(getColumnIndexOrThrow("shopping_list_id"));
         }
 
+        private int getQuantity(){
+            return getInt(getColumnIndexOrThrow("quantity"));
+        }
+
         public ShoppingListProduct getShoppingListProduct() {
             return new ShoppingListProduct(getProductId(), getShoppingListId());
         }
+
     }
 
     protected List<ShoppingListProduct> findShoppingListProduct(String query, String[] params) {
@@ -85,6 +91,7 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
                 ContentValues dbValues = new ContentValues();
                 dbValues.put("shopping_list_id", newShoppingListProduct.getShoppingListId());
                 dbValues.put("product_id", newShoppingListProduct.getProductId());
+                dbValues.put("quantity",newShoppingListProduct.getQuantity());
                 database.getWritableDatabase().insertOrThrow(TABLE_NAME, "product_id", dbValues);
                 database.getWritableDatabase().setTransactionSuccessful();
             } catch (SQLException sqle) {
@@ -94,5 +101,37 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
             }
         }
         return newShoppingListProduct;
+    }
+    public void updateQuantityForProduct(long productId, int quantity) {
+        SQLiteDatabase writableDatabase = database.getWritableDatabase();
+        writableDatabase.beginTransaction();
+        try {
+            ContentValues dbValues = new ContentValues();
+            dbValues.put("quantity", quantity);
+            writableDatabase.update(TABLE_NAME, dbValues, "product_id =" + productId, null);
+            writableDatabase.setTransactionSuccessful();
+        } catch (SQLException sqle) {
+            Log.e(TAG, "Could not update shopping list product. Exception is :" + sqle.getMessage());
+        } finally {
+            writableDatabase.endTransaction();
+        }
+    }
+
+    public int findOnProductAndShoppingList(long shoppingListID, long productID) {
+        Cursor quantityListCursor = null;
+        try {
+            quantityListCursor = database.getReadableDatabase().rawQueryWithFactory(new ShoppingListProductCursor.Factory(), ShoppingListProductCursor.FIND_BY_PRODUCT_AND_QUANTITY, new String[]{Long.toString(productID), Long.toString(shoppingListID)} , null);
+            if(quantityListCursor != null && quantityListCursor.moveToFirst()) {
+                return((ShoppingListProductCursor)quantityListCursor).getQuantity();
+            }
+        } catch(SQLException sqle) {
+            Log.e(TAG, "Could not get quantity values and the error is " + sqle.getMessage());
+        }
+        finally {
+            if(quantityListCursor != null && !quantityListCursor.isClosed()) {
+                quantityListCursor.close();
+            }
+        }
+        return -1;
     }
 }

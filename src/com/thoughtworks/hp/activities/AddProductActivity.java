@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.thoughtworks.hp.R;
-import com.thoughtworks.hp.adapters.ProductListAdapter;
+import com.thoughtworks.hp.adapters.AutoSuggestListAdapter;
+import com.thoughtworks.hp.adapters.BuyListAdapter;
 import com.thoughtworks.hp.datastore.ProductTable;
 import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 import com.thoughtworks.hp.models.Product;
@@ -19,6 +20,7 @@ import com.thoughtworks.hp.models.ShoppingList;
 import com.thoughtworks.hp.models.ShoppingListProduct;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,16 +29,21 @@ public class AddProductActivity extends Activity implements TextWatcher {
     private ProductTable productTable;
     private ShoppingListProductTable shoppingListProductTable;
 
-    private ProductListAdapter autoSuggestAdapter;
+    private AutoSuggestListAdapter autoSuggestAdapter;
     private List<Product> autoSuggestedProductList = new ArrayList<Product>();
 
-    private ProductListAdapter productListAdapter;
+
+    private BuyListAdapter buyListAdapter;
     private List<Product> toBuyProductList;
 
     private ListView autoSuggestListView;
     private long shoppingListId;
 
     private BarcodeScanner barcodeScanner;
+
+    private HashMap<Product, Integer> productsQuantityIndex;
+    private List<Product> products;
+
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -47,8 +54,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
         initDependencies();
         bindBarcodeScanner();
-        initToBuyListView();
         initAutoSuggestListView();
+        initToBuyListView();
         attachSelfAsTextWatcherToSearchBox();
     }
 
@@ -69,10 +76,29 @@ public class AddProductActivity extends Activity implements TextWatcher {
     }
 
     private void initToBuyListView() {
-        this.toBuyProductList = this.shoppingListId > 0 ? fetchProductsForShoppingList() : new ArrayList<Product>();
-        this.productListAdapter = new ProductListAdapter(this, R.layout.product_line_item, toBuyProductList);
+        this.toBuyProductList = fetchProductsForShoppingList()!= null? fetchProductsForShoppingList() : new ArrayList<Product>();
+        this.productsQuantityIndex = new HashMap<Product, Integer>();
+        for(Product product : toBuyProductList){
+            int quantity =  shoppingListProductTable.findOnProductAndShoppingList(this.shoppingListId, product.getId());
+            if(quantity >0){
+                productsQuantityIndex.put(product, quantity);
+            }
+        }
+
+        products = new ArrayList<Product>(productsQuantityIndex.keySet());
+        this.buyListAdapter = new BuyListAdapter(this, R.layout.product_line_item,  productsQuantityIndex, products);
         ListView toBuyProductListView = (ListView) this.findViewById(R.id.to_buy_product_view);
-        toBuyProductListView.setAdapter(this.productListAdapter);
+        toBuyProductListView.setAdapter(this.buyListAdapter);
+        toBuyProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Product product = toBuyProductList.get(position);
+                Intent intent = new Intent(AddProductActivity.this, AddQuantityActivity.class);
+                intent.putExtra("product_id", product.getId());
+                intent.putExtra("Shopping_list_id", shoppingListId);
+                startActivity(intent);
+            }
+        });
     }
 
     private List<Product> fetchProductsForShoppingList() {
@@ -80,7 +106,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
     }
 
     private void initAutoSuggestListView() {
-        this.autoSuggestAdapter = new ProductListAdapter(this, R.layout.product_auto_suggest_line_item, autoSuggestedProductList);
+        this.autoSuggestAdapter = new AutoSuggestListAdapter(this, R.layout.product_auto_suggest_line_item, autoSuggestedProductList);
         this.autoSuggestListView = (ListView) this.findViewById(R.id.auto_suggest_list);
         autoSuggestListView.setAdapter(this.autoSuggestAdapter);
         autoSuggestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,8 +119,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
     }
 
     private void addAndPersistProductInShoppingList(Product product) {
-        addSelectedProductToListing(product);
         saveSelectedProductToShoppingList(product);
+        addSelectedProductToListing(product);
         resetAutoSuggestList();
     }
 
@@ -105,7 +131,10 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
     private void addSelectedProductToListing(Product product) {
         toBuyProductList.add(product);
-        productListAdapter.notifyDataSetChanged();
+        int quantity =  shoppingListProductTable.findOnProductAndShoppingList(this.shoppingListId, product.getId());
+        productsQuantityIndex.put(product, quantity);
+        products.add(product);
+        buyListAdapter.notifyDataSetChanged();
     }
 
     private void resetAutoSuggestList() {
