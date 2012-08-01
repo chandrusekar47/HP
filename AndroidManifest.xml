@@ -19,6 +19,10 @@
         <activity android:name=".activities.AddQuantityActivity" >
         </activity>
         <activity android:name=".epromos.DragActivity" >
+        </activity>
+        <activity
+            android:name=".HomePage"
+            android:label="@string/title_activity_home_page" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
