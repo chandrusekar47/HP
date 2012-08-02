@@ -73,12 +73,15 @@ public class BuyListAdapter extends ArrayAdapter<Product> {
         TextView textView=holder.productQuantity;
         String productQuantityUnit = quantity==1 ? SINGLE_ITEM: MULTIPLE_ITEMS ;
         textView.setText(String.valueOf(quantity)+ productQuantityUnit);
-        if(product.getId() == 2) {
-            TextView amountAfterDiscount = holder.amountAfterDiscount;
-            amountAfterDiscount.setText(INDIAN_CURRENCY_SYMBOL + String.valueOf(Math.round(productCost * 0.8)));
-            productCostTextView.setPaintFlags(productCostTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-        }
+		if (product.getId() == 2) {
+			TextView amountAfterDiscount = holder.amountAfterDiscount;
+			amountAfterDiscount.setText(INDIAN_CURRENCY_SYMBOL + String.valueOf(Math.round(productCost * 0.8)));
+			productCostTextView.setPaintFlags(productCostTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+		} else {
+			TextView amountAfterDiscount = holder.amountAfterDiscount;
+			amountAfterDiscount.setText("");
+			productCostTextView.setPaintFlags(productCostTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+		}
     }
 
     private View setTagWithViewHolder(View convertView) {
