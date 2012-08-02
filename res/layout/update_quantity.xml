@@ -62,8 +62,8 @@
                         android:layout_width="60px"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:text="1" 
-                        android:inputType="number" >
+                        android:inputType="number"
+                        android:text="1" >
                     </EditText>
 
                     <ImageButton
@@ -76,6 +76,34 @@
                         android:background="@color/cell_empty"
                         android:onClick="incrementQuantity"
                         android:src="@drawable/symbol_add" />
+                </TableRow>
+
+                <TableRow
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center" >
+
+                    <TextView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/availability"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                         android:layout_gravity="center"
+                        android:text="Store Availability:"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/availabilityText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_span="3"
+                        android:layout_gravity="center"
+                        android:text="Available"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_margin="2dp" />
                 </TableRow>
             </TableLayout>
 
@@ -121,4 +149,5 @@
             </TableLayout>
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
