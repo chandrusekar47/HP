@@ -1,20 +1,19 @@
 package com.thoughtworks.hp.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
+
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.datastore.ShoppingListProductTable;
-import com.thoughtworks.hp.models.ShoppingList;
 
 public class AddQuantityActivity extends Activity {
 
     EditText editText;
     private long productId;
-    private long shoppingListId;
+    @SuppressWarnings("unused")
+	private long shoppingListId;
     private ShoppingListProductTable shoppingListProductTable;
 
     @Override

@@ -1,6 +1,7 @@
 package com.thoughtworks.hp;
 
 import android.app.Application;
+
 import com.thoughtworks.hp.datastore.HpDatabase;
 
 public class HypercityApplication extends Application {
@@ -9,7 +10,7 @@ public class HypercityApplication extends Application {
 
     @Override
     public void onCreate() {
-        if(this.database == null) database = HpDatabase.database(getApplicationContext());
+        if(HypercityApplication.database == null) database = HpDatabase.database(getApplicationContext());
     }
 
     @Override

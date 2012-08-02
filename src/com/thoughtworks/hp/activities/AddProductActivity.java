@@ -34,7 +34,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
     private ListView autoSuggestListView;
     private long shoppingListId;
 
-    private BarcodeScanner barcodeScanner;
+    @SuppressWarnings("unused")
+	private BarcodeScanner barcodeScanner;
 
     private TextView costOfShoppingList;
 
@@ -124,8 +125,10 @@ public class AddProductActivity extends Activity implements TextWatcher {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Product product = autoSuggestedProductList.get(position);
                 addAndPersistProductInShoppingList(product);
-                Toast toast = Toast.makeText(getBaseContext(), "Click on the added item to change the quantity", Toast.LENGTH_LONG);
-                toast.show();
+                Intent intent = new Intent(AddProductActivity.this, AddQuantityActivity.class);
+                intent.putExtra("product_id", product.getId());
+                intent.putExtra("Shopping_list_id", shoppingListId);
+                startActivityForResult(intent, 1);
             }
         });
     }

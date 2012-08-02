@@ -45,7 +45,8 @@ public class ShoppingListTable implements Table<ShoppingList> {
             return getString(getColumnIndexOrThrow("name"));
         }
 
-        public double getShoppingListCost() {
+        @SuppressWarnings("unused")
+		public double getShoppingListCost() {
             return getDouble(getColumnIndexOrThrow("cost"));
         }
 

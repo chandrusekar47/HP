@@ -47,7 +47,6 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	private void realizeShoppingLists(LinearLayout layoutToAddComponents) {
 		ShoppingListTable databaseInstance = new ShoppingListTable();
 		List<ShoppingList> shoppingLists = databaseInstance.findAll();
@@ -71,7 +70,6 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 
 	}
 
-	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
