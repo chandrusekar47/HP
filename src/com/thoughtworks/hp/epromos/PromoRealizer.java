@@ -61,6 +61,7 @@ public class PromoRealizer {
 			promotionCell.setOnLongClickListener((View.OnLongClickListener) mContext);
 			promotionCell.mCellNumber = loopVar;
 			TableRow.LayoutParams trParams = new TableRow.LayoutParams();
+			trParams.setMargins(2, 2, 2, 2);
 			if (rowCount % 2 != 0) {
 				if(iteratingRow.getChildCount() == (numberOfPromotionsOnOddRows -1)){
 					trParams.span = 2;

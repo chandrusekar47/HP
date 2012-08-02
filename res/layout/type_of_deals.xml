@@ -160,6 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@color/white"
+                android:onClick="goToDeal"
                 android:src="@drawable/sports"
                 android:text="Deals" />
 
