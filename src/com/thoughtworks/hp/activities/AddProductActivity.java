@@ -18,7 +18,6 @@ import com.thoughtworks.hp.models.ShoppingListProduct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class AddProductActivity extends Activity implements TextWatcher {
@@ -85,8 +84,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
         this.productsQuantityIndex = new HashMap<Product, Integer>();
         cost=0;
         for(Product product : toBuyProductList){
-            int quantity =  shoppingListProductTable.findOnProductAndShoppingList(this.shoppingListId, product.getId());
-            if(quantity >0){
+            int quantity =  shoppingListProductTable.findQuantityOnProductAndShoppingList(this.shoppingListId, product.getId());
+            if(quantity !=-1){
                 productsQuantityIndex.put(product, quantity);
                 cost += Math.round(product.getPrice() * quantity);
             }
@@ -144,7 +143,7 @@ public class AddProductActivity extends Activity implements TextWatcher {
 
     private void addSelectedProductToListing(Product product) {
         toBuyProductList.add(product);
-        int quantity =  shoppingListProductTable.findOnProductAndShoppingList(this.shoppingListId, product.getId());
+        int quantity =  shoppingListProductTable.findQuantityOnProductAndShoppingList(this.shoppingListId, product.getId());
         productsQuantityIndex.put(product, quantity);
         products.add(product);
         cost+=product.getPrice();

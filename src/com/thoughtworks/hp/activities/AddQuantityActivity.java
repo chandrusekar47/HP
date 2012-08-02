@@ -48,10 +48,6 @@ public class AddQuantityActivity extends Activity {
     public void onBackPressed() {
         int quantity = getValue();
         shoppingListProductTable.updateQuantityForProduct(productId,quantity);
-//        Intent intent = new Intent(AddQuantityActivity.this, AddProductActivity.class);
-        Intent intent=getIntent();
-        setResult(RESULT_OK,intent);
-        intent.putExtra(ShoppingList.SHOPPING_LIST_ID, shoppingListId);
         finish();
     }
 }

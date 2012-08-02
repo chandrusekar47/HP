@@ -20,7 +20,7 @@ public class HomePage extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_home_page);
+		setContentView(R.layout.home_page);
 		Button shoppingListButton = (Button) findViewById(R.id.button1);
 		HomeNavigationHandler navigationHandler = new HomeNavigationHandler();
 		shoppingListButton.setOnClickListener(navigationHandler);

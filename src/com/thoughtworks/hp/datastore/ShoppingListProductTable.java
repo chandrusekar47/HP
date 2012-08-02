@@ -25,7 +25,7 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
 
         private static final String FIELD_LIST = " product_id, shopping_list_id ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
-        public static String FIND_BY_PRODUCT_AND_QUANTITY= "SELECT quantity FROM "+ TABLE_NAME+ " WHERE product_id=? AND shopping_list_id = ?";
+        public static String FIND_QUANTITY_BY_PRODUCT_AND_SHOPPINGLIST = "SELECT quantity FROM "+ TABLE_NAME+ " WHERE product_id=? AND shopping_list_id = ?";
 
         public ShoppingListProductCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
             super(db, driver, editTable, query);
@@ -117,10 +117,10 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
         }
     }
 
-    public int findOnProductAndShoppingList(long shoppingListID, long productID) {
+    public int findQuantityOnProductAndShoppingList(long shoppingListID, long productID) {
         Cursor quantityListCursor = null;
         try {
-            quantityListCursor = database.getReadableDatabase().rawQueryWithFactory(new ShoppingListProductCursor.Factory(), ShoppingListProductCursor.FIND_BY_PRODUCT_AND_QUANTITY, new String[]{Long.toString(productID), Long.toString(shoppingListID)} , null);
+            quantityListCursor = database.getReadableDatabase().rawQueryWithFactory(new ShoppingListProductCursor.Factory(), ShoppingListProductCursor.FIND_QUANTITY_BY_PRODUCT_AND_SHOPPINGLIST, new String[]{Long.toString(productID), Long.toString(shoppingListID)} , null);
             if(quantityListCursor != null && quantityListCursor.moveToFirst()) {
                 return((ShoppingListProductCursor)quantityListCursor).getQuantity();
             }
