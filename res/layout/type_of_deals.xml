@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+    <ImageButton
+            android:id="@+id/deal1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="Shopping Lists"
+            android:src="@drawable/icon"
+            android:onClick="goToDeal"
+            />
+    <TextView android:id="@+id/text_deal1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="All Deals"
+              android:layout_below="@id/deal1"
+            />
+
+    <ImageButton
+            android:id="@+id/deal2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="Deals"
+            android:layout_marginLeft="100dp"
+            android:layout_toRightOf="@id/deal1"
+            android:src="@drawable/electronics"
+            android:onClick="goToDeal"
+            />
+    <TextView android:id="@+id/text_deal2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Electronics"
+              android:layout_below="@id/deal2"
+              android:layout_marginLeft="140dp"
+            />
+
+    <ImageButton
+            android:id="@+id/deal3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:background="@color/white"
+            android:text="Shopping Lists"
+            android:layout_below="@id/deal1"
+            android:src="@drawable/handbag"
+            android:onClick="goToDeal"
+            />
+    <TextView android:id="@+id/text_deal3"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Fashion"
+              android:layout_below="@id/deal3"
+            />
+
+    <ImageButton
+            android:id="@+id/deal4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_marginLeft="100dp"
+            android:background="@color/white"
+            android:text="Deals"
+            android:layout_toRightOf="@id/deal3"
+            android:layout_below="@id/deal2"
+            android:src="@drawable/groceries"
+            android:onClick="goToDeal"
+            />
+    <TextView android:id="@+id/text_deal4"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Groceries"
+              android:layout_marginLeft="140dp"
+              android:layout_below="@id/deal4"
+            />
+
+    <ImageButton
+            android:id="@+id/deal5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:background="@color/white"
+            android:text="Shopping Lists"
+            android:layout_below="@id/deal3"
+            android:src="@drawable/home_decor"
+            android:onClick="goToDeal"
+            />
+    <TextView android:id="@+id/text_deal5"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Home Decor"
+              android:layout_below="@id/deal5"
+            />
+
+    <ImageButton
+            android:id="@+id/deal6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_marginLeft="100dp"
+            android:background="@color/white"
+            android:text="Deals"
+            android:layout_toRightOf="@id/deal5"
+            android:layout_below="@id/deal4"
+            android:src="@drawable/sports"
+            />
+    <TextView android:id="@+id/text_deal6"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Sports"
+              android:layout_marginLeft="150dp"
+              android:layout_below="@id/deal6"
+            />
+
+</RelativeLayout>
