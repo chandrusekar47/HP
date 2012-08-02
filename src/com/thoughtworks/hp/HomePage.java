@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.thoughtworks.hp.activities.ShoppingListListingActivity;
-import com.thoughtworks.hp.epromos.DragActivity;
 import com.thoughtworks.hp.epromos.SelectDealActivity;
 
 @SuppressLint("ParserError")

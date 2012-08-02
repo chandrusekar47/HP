@@ -1,14 +1,19 @@
 package com.thoughtworks.hp.datastore;
 
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.*;
-import android.util.Log;
-import com.thoughtworks.hp.HypercityApplication;
-import com.thoughtworks.hp.models.Product;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteCursorDriver;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQuery;
+import android.util.Log;
+
+import com.thoughtworks.hp.HypercityApplication;
+import com.thoughtworks.hp.models.Product;
 
 public class ProductTable implements Table<Product> {
 

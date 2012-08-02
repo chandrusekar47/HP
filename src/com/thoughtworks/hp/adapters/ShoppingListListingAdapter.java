@@ -1,12 +1,13 @@
 package com.thoughtworks.hp.adapters;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.models.ShoppingList;
-
-import java.util.List;
 
 public class ShoppingListListingAdapter extends AbstractItemListingAdapter<ShoppingList> {
 

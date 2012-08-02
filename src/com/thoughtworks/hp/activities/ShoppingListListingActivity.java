@@ -1,5 +1,8 @@
 package com.thoughtworks.hp.activities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +11,11 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ShoppingListListingAdapter;
 import com.thoughtworks.hp.datastore.ShoppingListTable;
 import com.thoughtworks.hp.models.ShoppingList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShoppingListListingActivity extends Activity {
 

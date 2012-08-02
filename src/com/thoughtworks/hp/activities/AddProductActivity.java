@@ -1,12 +1,21 @@
 package com.thoughtworks.hp.activities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.AutoSuggestListAdapter;
 import com.thoughtworks.hp.adapters.BuyListAdapter;
@@ -15,10 +24,6 @@ import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 import com.thoughtworks.hp.models.Product;
 import com.thoughtworks.hp.models.ShoppingList;
 import com.thoughtworks.hp.models.ShoppingListProduct;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class AddProductActivity extends Activity implements TextWatcher {
 
