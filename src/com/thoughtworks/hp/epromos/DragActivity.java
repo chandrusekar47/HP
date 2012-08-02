@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,13 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thoughtworks.hp.R;
+import com.thoughtworks.hp.activities.ShoppingListListingActivity;
 import com.thoughtworks.hp.datastore.ShoppingListTable;
 import com.thoughtworks.hp.models.ShoppingList;
 
-
 @SuppressLint({ "ParserError", "ParserError" })
-public class DragActivity extends Activity implements View.OnLongClickListener,
-		View.OnClickListener, View.OnTouchListener {
+public class DragActivity extends Activity implements View.OnLongClickListener, View.OnClickListener, View.OnTouchListener {
 
 	private static final int HIDE_TRASHCAN_MENU_ID = Menu.FIRST;
 	private static final int SHOW_TRASHCAN_MENU_ID = Menu.FIRST + 1;
@@ -50,13 +50,12 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 	private void realizeShoppingLists(LinearLayout layoutToAddComponents) {
 		ShoppingListTable databaseInstance = new ShoppingListTable();
 		List<ShoppingList> shoppingLists = databaseInstance.findAll();
-		int loopVar = 0;
+		int loopVar = 1;
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 300);
-		layoutParams.setMargins(24, 10, 24, 10);
+		layoutParams.setMargins(20, 10, 20, 10);
 		for (ShoppingList list : shoppingLists) {
 			LinearLayout tempInstance = new LinearLayout(this);
-			tempInstance.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-					LayoutParams.FILL_PARENT));
+			tempInstance.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 			tempInstance.setOrientation(LinearLayout.VERTICAL);
 			ShoppingBasket shoppingCart = new ShoppingBasket(this);
 			shoppingCart.setImageDrawable(getResources().getDrawable(R.drawable.list));
@@ -70,6 +69,18 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 
 	}
 
+	@Override
+	protected void onActivityResult(int req, int res, Intent data) {
+		finish();
+		startActivity(this.getIntent());
+	}
+
+	public void createNewList(View view) {
+		Intent navigation = new Intent(DragActivity.this, ShoppingListListingActivity.class);
+		startActivityForResult(navigation, 0);
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -88,7 +99,7 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 		else {
 			new PromoRealizer(this, tableView).realizePromotions();
 			tableView.getLayoutParams().width = getWindowManager().getDefaultDisplay().getWidth();
-			ScrollView mainScroll = (ScrollView)findViewById(R.id.list_scroll);
+			ScrollView mainScroll = (ScrollView) findViewById(R.id.list_scroll);
 			mainScroll.getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight() - 200;
 		}
 
@@ -100,19 +111,7 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 
 		mDragController.setDragListener(mDragLayer);
 
-		Toast.makeText(getApplicationContext(), getResources().getString(R.string.instructions),
-				Toast.LENGTH_LONG).show();
-	}
-
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-
-		menu.add(0, HIDE_TRASHCAN_MENU_ID, 0, "Hide Trashcan").setShortcut('1', 'c');
-		menu.add(0, SHOW_TRASHCAN_MENU_ID, 0, "Show Trashcan").setShortcut('2', 'c');
-		menu.add(0, ADD_OBJECT_MENU_ID, 0, "Add View").setShortcut('9', 'z');
-		menu.add(0, CHANGE_TOUCH_MODE_MENU_ID, 0, "Change Touch Mode");
-
-		return true;
+		Toast.makeText(getApplicationContext(), getResources().getString(R.string.instructions), Toast.LENGTH_LONG).show();
 	}
 
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -132,7 +131,6 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 
 		return false;
 	}
-
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -170,7 +168,6 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 		return handledHere;
 	}
 
-
 	public boolean startDrag(View v) {
 		DragSource dragSource = (DragSource) v;
 
@@ -179,12 +176,9 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 		return true;
 	}
 
-
 	public void toast(String msg) {
 		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-	} 
-
-
+	}
 
 	public void trace(String msg) {
 		Log.d("DragActivity", msg);
@@ -192,4 +186,4 @@ public class DragActivity extends Activity implements View.OnLongClickListener,
 			return;
 	}
 
-} 
+}
