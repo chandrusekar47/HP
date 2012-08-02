@@ -47,6 +47,9 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     private HashMap<Product, Integer> productsQuantityIndex;
     private List<Product> products;
     private double cost;
+    public static final String SHOPPING_LIST_ID = "shopping_list_id";
+    public static final String PRODUCT_ID = "product_id";
+    public static final String QUANTITY = "quantity";
 
 
     @Override
@@ -73,12 +76,12 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
         barcodeScanner = new BarcodeScanner(this, (Button) this.findViewById(R.id.scan_button));
     }
 
-//    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-//        Product productFromBarcode = barcodeScanner.fetchProductFromBarcodeData(requestCode, resultCode, intent);
-//        if(productFromBarcode != null) {
-//            addAndPersistProductInShoppingList(productFromBarcode);
-//        }
-//    }
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Product productFromBarcode = barcodeScanner.fetchProductFromBarcodeData(requestCode, resultCode, intent);
+        if(productFromBarcode != null) {
+            addAndPersistProductInShoppingList(productFromBarcode);
+        }
+    }
 
     private void initDependencies() {
         this.productTable = new ProductTable();
@@ -106,17 +109,12 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
                 Product product= (Product) adapterView.getItemAtPosition(position);
                 int quantity =  shoppingListProductTable.findQuantityOnProductAndShoppingList(shoppingListId, product.getId());
                 Intent intent = new Intent(AddProductActivity.this, AddQuantityActivity.class);
-                intent.putExtra("product_id", product.getId());
-                intent.putExtra("Shopping_list_id", shoppingListId);
-                intent.putExtra("quantity",quantity);
-                startActivityForResult(intent, 1);
+                intent.putExtra(PRODUCT_ID, product.getId());
+                intent.putExtra(SHOPPING_LIST_ID, shoppingListId);
+                intent.putExtra(QUANTITY, quantity);
+                startActivity(intent);
             }
         });
-    }
-
-    protected void onActivityResult(int req, int res, Intent data) {
-        finish();
-        startActivity(this.getIntent());
     }
 
     private List<Product> fetchProductsForShoppingList() {

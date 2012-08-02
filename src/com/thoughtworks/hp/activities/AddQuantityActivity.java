@@ -1,16 +1,16 @@
 package com.thoughtworks.hp.activities;
 
-import java.text.SimpleDateFormat;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.thoughtworks.hp.CustomWindow;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.datastore.ProductAvailabilityService;
 import com.thoughtworks.hp.datastore.ShoppingListProductTable;
+
+import java.text.SimpleDateFormat;
 
 public class AddQuantityActivity extends CustomWindow {
 
@@ -46,28 +46,28 @@ public class AddQuantityActivity extends CustomWindow {
 		}
 	}
 
-	private int getValue() {
-		int quantity = Integer.parseInt(editText.getText().toString());
-		if (quantity < 0)
-			quantity = 0;
-		return quantity;
-	}
-
 	public void incrementQuantity(View view) {
-		int quantity = getValue() + 1;
-		editText.setText(String.valueOf(quantity));
+        int quantity = getQuantityFromEditBox() +1;
+        editText.setText(String.valueOf(quantity));
+        updateQuantityInDatabase();
 	}
 
 	public void decrementQuantity(View view) {
-		EditText editText = (EditText) findViewById(R.id.quantity_value);
-		int quantity = getValue() != 0 ? getValue() - 1 : 0;
-		editText.setText(String.valueOf(quantity));
+        EditText editText = (EditText) findViewById(R.id.quantity_value);
+        int quantity = getQuantityFromEditBox()!=0 ? getQuantityFromEditBox()-1 : 0;
+        editText.setText(String.valueOf(quantity));
+        updateQuantityInDatabase();
 	}
 
-	@Override
-	public void onBackPressed() {
-		int quantity = getValue();
-		shoppingListProductTable.updateQuantityForProduct(productId, quantity);
-		finish();
-	}
+    private int getQuantityFromEditBox() {
+        editText = (EditText) findViewById(R.id.quantity_value);
+        int quantity = Integer.parseInt(editText.getText().toString());
+        if(quantity < 0)
+            quantity = 0;
+        return quantity;
+    }
+
+    private void updateQuantityInDatabase() {
+        new ShoppingListProductTable().updateQuantityForProduct(productId, getQuantityFromEditBox());
+    }
 }

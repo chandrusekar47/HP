@@ -5,20 +5,11 @@ public class ShoppingListProduct {
     private long shoppingListId;
     private long productId;
     private int quantity;
-    private double costOfProduct;
 
     public ShoppingListProduct(long productId, long shoppingListId) {
         this.productId = productId;
         this.shoppingListId = shoppingListId;
         this.quantity = 1;
-
-
-    }
-
-    public ShoppingListProduct(long productId, long shoppingListId, int quantity) {
-        this.productId = productId;
-        this.shoppingListId = shoppingListId;
-        this.quantity = quantity;
     }
 
     public int getQuantity() {
@@ -32,4 +23,5 @@ public class ShoppingListProduct {
     public long getProductId() {
         return productId;
     }
+
 }
