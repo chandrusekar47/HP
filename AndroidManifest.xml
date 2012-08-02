@@ -30,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".epromos.SelectDealActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.thoughtworks.hp.activities.ShoppingListListingActivity;
 import com.thoughtworks.hp.epromos.DragActivity;
+import com.thoughtworks.hp.epromos.SelectDealActivity;
 
 @SuppressLint("ParserError")
 public class HomePage extends Activity {
@@ -40,7 +41,7 @@ public class HomePage extends Activity {
 				break;
 
 			case R.id.button2:
-				Intent deals = new Intent(HomePage.this, DragActivity.class);
+				Intent deals = new Intent(HomePage.this, SelectDealActivity.class);
 				startActivity(deals);
 				break;
 
