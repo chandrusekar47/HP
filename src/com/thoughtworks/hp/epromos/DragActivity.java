@@ -3,7 +3,6 @@ package com.thoughtworks.hp.epromos;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +18,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thoughtworks.hp.CustomWindow;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.activities.AddProductActivity;
 import com.thoughtworks.hp.activities.ShoppingListListingActivity;
@@ -26,7 +26,7 @@ import com.thoughtworks.hp.datastore.ShoppingListTable;
 import com.thoughtworks.hp.models.ShoppingList;
 
 @SuppressLint({ "ParserError", "ParserError" })
-public class DragActivity extends Activity implements View.OnLongClickListener, View.OnClickListener, View.OnTouchListener {
+public class DragActivity extends CustomWindow implements View.OnLongClickListener, View.OnClickListener, View.OnTouchListener {
 
 	private DragController mDragController;
 	private DragLayer mDragLayer;
@@ -85,7 +85,7 @@ public class DragActivity extends Activity implements View.OnLongClickListener, 
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.demo);
