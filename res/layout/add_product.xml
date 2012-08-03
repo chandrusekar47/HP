@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_height="fill_parent"
+              android:layout_width="fill_parent">
+
+    <RelativeLayout
               android:id="@+id/add_product_component_wrapper"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <EditText android:id="@+id/searchBox"
               android:singleLine="true"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="10sp"
+              android:layout_marginLeft="44sp"
               android:layout_marginRight="10sp"
               android:layout_marginTop="10sp"
               android:textSize="18sp"
-              android:hint="e.g. Tomato Ketchup" />
+              android:hint="Add an item.." />
+
+    <ImageButton android:id="@+id/add_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:src="@drawable/create_hyper_list"
+                 android:layout_marginTop="10sp"
+                    />
 
     <Button android:id="@+id/scan_button"
             android:layout_width="wrap_content"
@@ -24,26 +34,10 @@
             android:layout_marginTop="10sp"
             android:text="Scan"/>
 
-    <TextView android:id="@+id/display_message"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Total Cost :"
-              android:layout_below="@id/searchBox"
-              android:textSize="20sp"
-              android:layout_marginLeft="10sp"/>
-
-    <TextView android:id="@+id/cost_of_shopping_list"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/searchBox"
-              android:layout_marginLeft="120sp"
-              android:textSize="20sp"
-              android:layout_marginTop="2sp"/>
-
     <ListView android:id="@+id/to_buy_product_view"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:layout_below="@id/display_message"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/searchBox"
               android:layout_weight="1"
               android:layout_marginLeft="10sp"
               android:layout_marginRight="10sp"
@@ -53,7 +47,7 @@
 
     <ListView android:id="@+id/auto_suggest_list"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+              android:layout_height="wrap_content"
               android:layout_below="@id/searchBox"
               android:layout_weight="1"
               android:layout_marginLeft="10sp"
@@ -61,5 +55,24 @@
               android:layout_marginTop="0sp"
               android:layout_marginBottom="10sp"
               android:drawSelectorOnTop="false"/>
+    </RelativeLayout>
 
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_below="@id/add_product_component_wrapper"
+            android:layout_alignParentBottom="true">
+
+        <TextView android:id="@+id/display_message"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Total Cost :"
+                  android:textSize="20sp"
+                />
+
+        <TextView android:id="@+id/cost_of_shopping_list"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="20sp"/>
+        </LinearLayout>
 </RelativeLayout>
