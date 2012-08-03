@@ -103,10 +103,12 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
         toBuyProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Product product = toBuyProductList.get(position);
+                Product product= (Product) adapterView.getItemAtPosition(position);
+                int quantity =  shoppingListProductTable.findQuantityOnProductAndShoppingList(shoppingListId, product.getId());
                 Intent intent = new Intent(AddProductActivity.this, AddQuantityActivity.class);
                 intent.putExtra("product_id", product.getId());
                 intent.putExtra("Shopping_list_id", shoppingListId);
+                intent.putExtra("quantity",quantity);
                 startActivityForResult(intent, 1);
             }
         });
@@ -128,7 +130,7 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
         autoSuggestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Product product = autoSuggestedProductList.get(position);
+                Product product = (Product) adapterView.getItemAtPosition(position);
                 addAndPersistProductInShoppingList(product);
                 Intent intent = new Intent(AddProductActivity.this, AddQuantityActivity.class);
                 intent.putExtra("product_id", product.getId());

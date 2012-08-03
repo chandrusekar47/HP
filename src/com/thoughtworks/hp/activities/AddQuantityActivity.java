@@ -16,6 +16,7 @@ public class AddQuantityActivity extends CustomWindow {
 
 	EditText editText;
 	private long productId;
+    private int quantity;
 	@SuppressWarnings("unused")
 	private long shoppingListId;
 	private ShoppingListProductTable shoppingListProductTable;
@@ -29,6 +30,9 @@ public class AddQuantityActivity extends CustomWindow {
 		shoppingListProductTable = new ShoppingListProductTable();
 		productId = getIntent().getLongExtra("product_id", 1L);
 		shoppingListId = getIntent().getLongExtra("Shopping_list_id", 0L);
+        quantity = getIntent().getIntExtra("quantity",1);
+        editText = (EditText) findViewById(R.id.quantity_value);
+        editText.setText(String.valueOf(quantity));
 		boolean availableStatus = ProductAvailabilityService.isProductAvailable(productId);
 		TextView textToChange = (TextView) findViewById(R.id.availabilityText);
 		if (!availableStatus) {
@@ -43,7 +47,6 @@ public class AddQuantityActivity extends CustomWindow {
 	}
 
 	private int getValue() {
-		editText = (EditText) findViewById(R.id.quantity_value);
 		int quantity = Integer.parseInt(editText.getText().toString());
 		if (quantity < 0)
 			quantity = 0;
