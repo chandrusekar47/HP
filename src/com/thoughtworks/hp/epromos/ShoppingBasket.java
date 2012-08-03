@@ -6,41 +6,45 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.thoughtworks.hp.R;
 
+@SuppressLint({ "ParserError", "ViewConstructor" })
 public class ShoppingBasket extends ImageView implements DragSource, DropTarget {
-	public GridView mGrid;
+	private long shoppingListID;
 
-	public ShoppingBasket(Context context) {
+	public ShoppingBasket(Context context, long shoppingListID) {
 		super(context);
+		this.shoppingListID = shoppingListID;
 	}
 
-	public ShoppingBasket(Context context, AttributeSet attrs) {
+	public ShoppingBasket(Context context, AttributeSet attrs, long shoppingListID) {
 		super(context, attrs);
+		this.shoppingListID = shoppingListID;
 	}
 
-	public ShoppingBasket(Context context, AttributeSet attrs, int style) {
+	public ShoppingBasket(Context context, AttributeSet attrs, int style, long shoppingListID) {
 		super(context, attrs, style);
+		this.shoppingListID = shoppingListID;
 	}
 
 	public boolean allowDrag() {
-		// There is something to drag if the cell is not empty.
 		return false;
 	}
 
+	public long getShoppingListID() {
+		return this.shoppingListID;
+	}
+
 	public void setDragController(DragController dragger) {
-		// Do nothing. We do not need to know the controller object.
 	}
 
 	@SuppressLint("ParserError")
 	public void onDropCompleted(View target, boolean success) {
 	}
 
-	public void onDrop(DragSource source, int x, int y, int xOffset,
-			int yOffset, DragView dragView, Object dragInfo) {
+	public void onDrop(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
 		Log.e("Alert", "Added to Shopping List");
 
 	}
@@ -49,8 +53,7 @@ public class ShoppingBasket extends ImageView implements DragSource, DropTarget 
 	 * React to a dragged object entering the area of this DropSpot. Provide the
 	 * user with some visual feedback.
 	 */
-	public void onDragEnter(DragSource source, int x, int y, int xOffset,
-			int yOffset, DragView dragView, Object dragInfo) {
+	public void onDragEnter(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
 		setImageDrawable(getResources().getDrawable(R.drawable.list_big));
 
 	}
@@ -58,15 +61,13 @@ public class ShoppingBasket extends ImageView implements DragSource, DropTarget 
 	/**
 	 * React to something being dragged over the drop target.
 	 */
-	public void onDragOver(DragSource source, int x, int y, int xOffset,
-			int yOffset, DragView dragView, Object dragInfo) {
+	public void onDragOver(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
 	}
 
 	/**
 	 * React to a drag
 	 */
-	public void onDragExit(DragSource source, int x, int y, int xOffset,
-			int yOffset, DragView dragView, Object dragInfo) {
+	public void onDragExit(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
 		setImageDrawable(getResources().getDrawable(R.drawable.list));
 
 	}
@@ -94,8 +95,7 @@ public class ShoppingBasket extends ImageView implements DragSource, DropTarget 
 	 *            Data associated with the object being dragged
 	 * @return True if the drop will be accepted, false otherwise.
 	 */
-	public boolean acceptDrop(DragSource source, int x, int y, int xOffset,
-			int yOffset, DragView dragView, Object dragInfo) {
+	public boolean acceptDrop(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
 		return true;
 	}
 
@@ -125,9 +125,7 @@ public class ShoppingBasket extends ImageView implements DragSource, DropTarget 
 	 *         the given location. Should return null if no estimate is found,
 	 *         or if this target doesn't provide estimations.
 	 */
-	public Rect estimateDropLocation(DragSource source, int x, int y,
-			int xOffset, int yOffset, DragView dragView, Object dragInfo,
-			Rect recycle) {
+	public Rect estimateDropLocation(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo, Rect recycle) {
 		return null;
 	}
 
@@ -150,7 +148,7 @@ public class ShoppingBasket extends ImageView implements DragSource, DropTarget 
 	 */
 
 	public boolean performClick() {
-		return false;
+		return super.performClick();
 	}
 
 	/**

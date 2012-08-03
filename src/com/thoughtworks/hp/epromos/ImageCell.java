@@ -47,7 +47,6 @@ public class ImageCell extends ImageView implements DragSource, DropTarget {
 		// If the drop succeeds, the image has moved elsewhere.
 		// So clear the image cell.
 		if (success) {
-			mEmpty = true;
 			showDialog("Deal Added", "Your deal was successfully added to your shopping list");
 
 		}

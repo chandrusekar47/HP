@@ -8,10 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thoughtworks.hp.R;
+import com.thoughtworks.hp.activities.AddProductActivity;
 import com.thoughtworks.hp.activities.ShoppingListListingActivity;
 import com.thoughtworks.hp.datastore.ShoppingListTable;
 import com.thoughtworks.hp.models.ShoppingList;
@@ -28,14 +28,8 @@ import com.thoughtworks.hp.models.ShoppingList;
 @SuppressLint({ "ParserError", "ParserError" })
 public class DragActivity extends Activity implements View.OnLongClickListener, View.OnClickListener, View.OnTouchListener {
 
-	private static final int HIDE_TRASHCAN_MENU_ID = Menu.FIRST;
-	private static final int SHOW_TRASHCAN_MENU_ID = Menu.FIRST + 1;
-	private static final int ADD_OBJECT_MENU_ID = Menu.FIRST + 2;
-	private static final int CHANGE_TOUCH_MODE_MENU_ID = Menu.FIRST + 3;
-
 	private DragController mDragController;
 	private DragLayer mDragLayer;
-	private DeleteZone mDeleteZone;
 
 	private boolean mLongClickStartsDrag = true;
 
@@ -53,12 +47,22 @@ public class DragActivity extends Activity implements View.OnLongClickListener, 
 		int loopVar = 1;
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 300);
 		layoutParams.setMargins(20, 10, 20, 10);
-		for (ShoppingList list : shoppingLists) {
+		for (final ShoppingList list : shoppingLists) {
 			LinearLayout tempInstance = new LinearLayout(this);
 			tempInstance.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 			tempInstance.setOrientation(LinearLayout.VERTICAL);
-			ShoppingBasket shoppingCart = new ShoppingBasket(this);
+			ShoppingBasket shoppingCart = new ShoppingBasket(this, list.getId());
 			shoppingCart.setImageDrawable(getResources().getDrawable(R.drawable.list));
+			shoppingCart.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent addItemsToShoppingList = new Intent(DragActivity.this, AddProductActivity.class);
+					addItemsToShoppingList.putExtra(ShoppingList.SHOPPING_LIST_ID, list.getId());
+					startActivityForResult(addItemsToShoppingList, 3);
+
+				}
+			});
 			TextView textView = new TextView(this);
 			textView.setText(list.getName());
 			textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -100,7 +104,7 @@ public class DragActivity extends Activity implements View.OnLongClickListener, 
 			new PromoRealizer(this, tableView).realizePromotions();
 			tableView.getLayoutParams().width = getWindowManager().getDefaultDisplay().getWidth();
 			ScrollView mainScroll = (ScrollView) findViewById(R.id.list_scroll);
-			mainScroll.getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight() - 200;
+			mainScroll.getLayoutParams().height = getWindowManager().getDefaultDisplay().getHeight() - 225;
 		}
 
 		mDragController = new DragController(this);
@@ -130,27 +134,6 @@ public class DragActivity extends Activity implements View.OnLongClickListener, 
 		}
 
 		return false;
-	}
-
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case HIDE_TRASHCAN_MENU_ID:
-			if (mDeleteZone != null)
-				mDeleteZone.setVisibility(View.INVISIBLE);
-			return true;
-		case SHOW_TRASHCAN_MENU_ID:
-			if (mDeleteZone != null)
-				mDeleteZone.setVisibility(View.VISIBLE);
-			return true;
-		case CHANGE_TOUCH_MODE_MENU_ID:
-			mLongClickStartsDrag = !mLongClickStartsDrag;
-			String message = mLongClickStartsDrag ? "Changed touch mode. Drag now starts on long touch (click)."
-					: "Changed touch mode. Drag now starts on touch (click).";
-			Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
 	}
 
 	public boolean onTouch(View v, MotionEvent ev) {
