@@ -1,7 +1,6 @@
 package com.thoughtworks.hp;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,7 @@ import com.thoughtworks.hp.activities.ShoppingListListingActivity;
 import com.thoughtworks.hp.epromos.SelectDealActivity;
 
 @SuppressLint("ParserError")
-public class HomePage extends Activity {
+public class HomePage extends CustomWindow {
 
 	@SuppressLint("ParserError")
 	@Override

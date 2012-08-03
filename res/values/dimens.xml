@@ -16,7 +16,9 @@
 -->
 
 <resources>
-
+    <dimen name="quickaction_shadow_horiz">0dip</dimen>
+    <dimen name="quickaction_shadow_vert">30dip</dimen>
+    <dimen name="quickaction_shadow_touch">20dip</dimen>
     <dimen name="title_texture_width">120px</dimen>
 
     <!-- height of the bottom row of controls -->

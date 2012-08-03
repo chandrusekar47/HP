@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.thoughtworks.hp.CustomWindow;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.AutoSuggestListAdapter;
 import com.thoughtworks.hp.adapters.BuyListAdapter;
@@ -25,7 +25,7 @@ import com.thoughtworks.hp.models.Product;
 import com.thoughtworks.hp.models.ShoppingList;
 import com.thoughtworks.hp.models.ShoppingListProduct;
 
-public class AddProductActivity extends Activity implements TextWatcher {
+public class AddProductActivity extends CustomWindow implements TextWatcher {
 
     private ProductTable productTable;
     private ShoppingListProductTable shoppingListProductTable;
