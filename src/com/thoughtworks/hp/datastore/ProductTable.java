@@ -1,19 +1,14 @@
 package com.thoughtworks.hp.datastore;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteCursorDriver;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQuery;
+import android.database.sqlite.*;
 import android.util.Log;
-
 import com.thoughtworks.hp.HypercityApplication;
 import com.thoughtworks.hp.models.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductTable implements Table<Product> {
 
@@ -27,7 +22,7 @@ public class ProductTable implements Table<Product> {
 
     private static class ProductCursor extends SQLiteCursor {
 
-        private static final String FIELD_LIST = " id, name, barcode_id, category, price, uom, status ";
+        private static final String FIELD_LIST = " id, name, barcode_id, category, price, uom ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
         private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE id = ?";
         private static final String NAME_LIKE_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME +" WHERE name like ? ";
@@ -70,12 +65,8 @@ public class ProductTable implements Table<Product> {
 			return getString(getColumnIndexOrThrow("uom"));
         }
 
-        public boolean getStatus(){
-            return Boolean.getBoolean(getString(getColumnIndexOrThrow("status")));
-        }
-
         public Product getProduct() {
-            return new Product(getProductId(), getName(), getBarcodeId(), getCategory(), getStatus(), getCost(), getUOM());
+            return new Product(getProductId(), getName(), getBarcodeId(), getCategory(), getCost(), getUOM());
         }
     }
 

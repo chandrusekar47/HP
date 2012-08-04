@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteQuery;
 import android.util.Log;
 
 import com.thoughtworks.hp.HypercityApplication;
+import com.thoughtworks.hp.models.Product;
 import com.thoughtworks.hp.models.ShoppingListProduct;
 
 public class ShoppingListProductTable implements Table<ShoppingListProduct> {
@@ -26,11 +27,13 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
         this.database = new HypercityApplication().database();
     }
 
+
     private static class ShoppingListProductCursor extends SQLiteCursor {
 
-        private static final String FIELD_LIST = " product_id, shopping_list_id ";
+        private static final String FIELD_LIST = " product_id, shopping_list_id, quantity ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
         public static String FIND_QUANTITY_BY_PRODUCT_AND_SHOPPINGLIST = "SELECT quantity FROM "+ TABLE_NAME+ " WHERE product_id=? AND shopping_list_id = ?";
+        public static final String SHOPPING_LIST_PRODUCTS_QUERY = "SELECT " + FIELD_LIST + " FROM "+ TABLE_NAME + " WHERE shopping_list_id = ?";
 
         public ShoppingListProductCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
             super(db, driver, editTable, query);
@@ -43,7 +46,7 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
         }
 
         private long getProductId() {
-            return getLong(getColumnIndexOrThrow("shopping_list_id"));
+            return getLong(getColumnIndexOrThrow("product_id"));
         }
 
         private long getShoppingListId() {
@@ -55,9 +58,8 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
         }
 
         public ShoppingListProduct getShoppingListProduct() {
-            return new ShoppingListProduct(getProductId(), getShoppingListId());
+            return new ShoppingListProduct(getProductId(), getShoppingListId(), getQuantity());
         }
-
     }
 
     protected List<ShoppingListProduct> findShoppingListProduct(String query, String[] params) {
@@ -89,6 +91,12 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
         return null;
     }
 
+    public List<ShoppingListProduct> findShoppingListProductByShoppingListId(long shoppingListId) {
+        List<ShoppingListProduct> shoppingListProducts = findShoppingListProduct(ShoppingListProductCursor.SHOPPING_LIST_PRODUCTS_QUERY,
+                                                                                 new String[]{Long.toString(shoppingListId)});
+        return shoppingListProducts;
+    }
+
     public ShoppingListProduct create(ShoppingListProduct newShoppingListProduct) {
         if (newShoppingListProduct != null) {
             database.getWritableDatabase().beginTransaction();
@@ -97,7 +105,7 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
                 dbValues.put("shopping_list_id", newShoppingListProduct.getShoppingListId());
                 dbValues.put("product_id", newShoppingListProduct.getProductId());
                 dbValues.put("quantity",newShoppingListProduct.getQuantity());
-                database.getWritableDatabase().insertOrThrow(TABLE_NAME, "product_id", dbValues);
+                database.getWritableDatabase().insertOrThrow(TABLE_NAME, "quantity", dbValues);
                 database.getWritableDatabase().setTransactionSuccessful();
             } catch (SQLException sqle) {
                 Log.e(TAG, "Could not create new shopping list product. Exception is :" + sqle.getMessage());

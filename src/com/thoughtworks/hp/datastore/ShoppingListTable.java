@@ -109,8 +109,4 @@ public class ShoppingListTable implements Table<ShoppingList> {
         return newShoppingList;
     }
 
-    public void calculateCost() {
-
-    }
-
 }

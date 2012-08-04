@@ -1,22 +1,30 @@
 package com.thoughtworks.hp.models;
 
+import com.thoughtworks.hp.datastore.ProductTable;
+
+import java.util.List;
+
 public class Product {
 
     private long id;
     private String name;
     private String barcodeId;
     private String category;
-    private boolean status;
     private double price;
     private String uom;
-    private static final String INDIAN_CURRENCY_SYMBOL = "Rs. ";
+    public static final String INDIAN_CURRENCY_SYMBOL = "Rs. ";
 
-    public Product(long productId, String name, String barcodeId, String category, boolean status, double price, String uom) {
+    private static ProductTable productTable;
+
+    static {
+        productTable = new ProductTable();
+    }
+
+    public Product(long productId, String name, String barcodeId, String category, double price, String uom) {
         this.id = productId;
         this.name = name;
         this.barcodeId = barcodeId;
         this.category = category;
-        this.status = status;
         this.price = price;
         this.uom = uom;
     }
@@ -44,6 +52,18 @@ public class Product {
 
     public long getId() {
         return id;
+    }
+
+    public static List<Product> findProductsByMatchingName(String name) {
+        return productTable.findByMatchingName(name);
+    }
+
+    public static List<Product> findProductsByShoppingListId(long id) {
+        return productTable.findByShoppingList(id);
+    }
+
+    public static Product findById(long productId) {
+        return productTable.findById(productId);
     }
 
     @Override

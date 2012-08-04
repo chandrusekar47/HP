@@ -1,56 +1,38 @@
 package com.thoughtworks.hp.activities;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.thoughtworks.hp.CustomWindow;
 import com.thoughtworks.hp.R;
-import com.thoughtworks.hp.adapters.AutoSuggestListAdapter;
 import com.thoughtworks.hp.adapters.BuyListAdapter;
-import com.thoughtworks.hp.datastore.ProductTable;
-import com.thoughtworks.hp.datastore.ShoppingListProductTable;
+import com.thoughtworks.hp.adapters.ProductListAdapter;
 import com.thoughtworks.hp.models.Product;
 import com.thoughtworks.hp.models.ShoppingList;
 import com.thoughtworks.hp.models.ShoppingListProduct;
+import com.thoughtworks.hp.presenters.ShoppingListPresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddProductActivity extends CustomWindow implements TextWatcher {
 
-    private ProductTable productTable;
-    private ShoppingListProductTable shoppingListProductTable;
+    private ShoppingListPresenter shoppingListScreen;
 
-    private AutoSuggestListAdapter autoSuggestAdapter;
+    private ProductListAdapter autoSuggestAdapter;
+    private ListView autoSuggestListView;
     private List<Product> autoSuggestedProductList = new ArrayList<Product>();
 
-    private BuyListAdapter buyListAdapter;
-    private List<Product> toBuyProductList;
-
-    private ListView autoSuggestListView;
+    private BuyListAdapter shoppingListProductAdapter;
+    private List<ShoppingListProduct> toBuyProductList = new ArrayList<ShoppingListProduct>();
     private long shoppingListId;
 
-    @SuppressWarnings("unused")
 	private BarcodeScanner barcodeScanner;
 
     private TextView costOfShoppingList;
-
-    private HashMap<Product, Integer> productsQuantityIndex;
-    private List<Product> products;
-    private double cost;
-    public static final String SHOPPING_LIST_ID = "shopping_list_id";
-    public static final String PRODUCT_ID = "product_id";
-    public static final String QUANTITY = "quantity";
-
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -58,18 +40,13 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
         setContentView(R.layout.add_product);
 
         this.shoppingListId = getIntent().getLongExtra(ShoppingList.SHOPPING_LIST_ID, 1);
+        shoppingListScreen = new ShoppingListPresenter(ShoppingList.findById(shoppingListId));
 
-        initDependencies();
         bindBarcodeScanner();
         initToBuyListView();
         initAutoSuggestListView();
-        initCostOfShoppingList();
+        refreshShoppingListCost();
         attachSelfAsTextWatcherToSearchBox();
-    }
-
-    private void initCostOfShoppingList() {
-        costOfShoppingList = (TextView) findViewById(R.id.cost_of_shopping_list);
-        costOfShoppingList.setText(String.valueOf(cost));
     }
 
     private void bindBarcodeScanner() {
@@ -83,79 +60,40 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
         }
     }
 
-    private void initDependencies() {
-        this.productTable = new ProductTable();
-        this.shoppingListProductTable = new ShoppingListProductTable();
-    }
-
     private void initToBuyListView() {
-        this.toBuyProductList = fetchProductsForShoppingList()!= null? fetchProductsForShoppingList() : new ArrayList<Product>();
-        this.productsQuantityIndex = new HashMap<Product, Integer>();
-        cost=0;
-        for(Product product : toBuyProductList){
-            int quantity =  shoppingListProductTable.findQuantityOnProductAndShoppingList(this.shoppingListId, product.getId());
-            if(quantity !=-1){
-                productsQuantityIndex.put(product, quantity);
-                cost += Math.round(product.getPrice() * quantity);
-            }
-        }
-        products = new ArrayList<Product>(productsQuantityIndex.keySet());
-        this.buyListAdapter = new BuyListAdapter(this, R.layout.product_line_item,  productsQuantityIndex, products);
+        this.toBuyProductList.addAll(shoppingListScreen.shoppingListProducts());
+        this.shoppingListProductAdapter = new BuyListAdapter(this, R.layout.product_line_item, toBuyProductList);
         ListView toBuyProductListView = (ListView) this.findViewById(R.id.to_buy_product_view);
-        toBuyProductListView.setAdapter(this.buyListAdapter);
-        toBuyProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Product product= (Product) adapterView.getItemAtPosition(position);
-                int quantity =  shoppingListProductTable.findQuantityOnProductAndShoppingList(shoppingListId, product.getId());
-                Intent intent = new Intent(AddProductActivity.this, AddQuantityActivity.class);
-                intent.putExtra(PRODUCT_ID, product.getId());
-                intent.putExtra(SHOPPING_LIST_ID, shoppingListId);
-                intent.putExtra(QUANTITY, quantity);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private List<Product> fetchProductsForShoppingList() {
-        return productTable.findByShoppingList(this.shoppingListId);
+        toBuyProductListView.setAdapter(this.shoppingListProductAdapter);
     }
 
     private void initAutoSuggestListView() {
-        this.autoSuggestAdapter = new AutoSuggestListAdapter(this, R.layout.product_auto_suggest_line_item, autoSuggestedProductList);
+        this.autoSuggestAdapter = new ProductListAdapter(this, R.layout.product_auto_suggest_line_item, autoSuggestedProductList);
         this.autoSuggestListView = (ListView) this.findViewById(R.id.auto_suggest_list);
         autoSuggestListView.setAdapter(this.autoSuggestAdapter);
         autoSuggestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Product product = (Product) adapterView.getItemAtPosition(position);
+                Product product = autoSuggestedProductList.get(position);
                 addAndPersistProductInShoppingList(product);
-                Intent intent = new Intent(AddProductActivity.this, AddQuantityActivity.class);
-                intent.putExtra("product_id", product.getId());
-                intent.putExtra("Shopping_list_id", shoppingListId);
-                startActivityForResult(intent, 1);
             }
         });
     }
 
     private void addAndPersistProductInShoppingList(Product product) {
-        saveSelectedProductToShoppingList(product);
-        addSelectedProductToListing(product);
+        shoppingListScreen.addSelectedProductToShoppingList(product);
+        resetCompleteView();
+    }
+
+    private void refreshShoppingListCost() {
+        costOfShoppingList = (TextView) findViewById(R.id.cost_of_shopping_list);
+        costOfShoppingList.setText(shoppingListScreen.totalShoppingListCost());
+    }
+
+    private void resetCompleteView() {
+        resetToBuyList();
+        refreshShoppingListCost();
         resetAutoSuggestList();
-    }
-
-    private void saveSelectedProductToShoppingList(Product product) {
-        ShoppingListProduct newShoppingListProduct = new ShoppingListProduct(product.getId(), this.shoppingListId);
-        this.shoppingListProductTable.create(newShoppingListProduct);
-    }
-
-    private void addSelectedProductToListing(Product product) {
-        toBuyProductList.add(product);
-        int quantity =  shoppingListProductTable.findQuantityOnProductAndShoppingList(this.shoppingListId, product.getId());
-        productsQuantityIndex.put(product, quantity);
-        products.add(product);
-        cost+=product.getPrice();
-        buyListAdapter.notifyDataSetChanged();
     }
 
     private void resetAutoSuggestList() {
@@ -163,11 +101,12 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
         autoSuggestAdapter.notifyDataSetChanged();
         ((EditText)AddProductActivity.this.findViewById(R.id.searchBox)).setText("");
         autoSuggestListView.setVisibility(View.INVISIBLE);
-        initCostOfShoppingList();
     }
 
-    private List<Product> findMatchingProducts(String nameFragment) {
-        return productTable.findByMatchingName(nameFragment);
+    private void resetToBuyList() {
+        toBuyProductList.clear();
+        toBuyProductList.addAll(shoppingListScreen.shoppingListProducts());
+        shoppingListProductAdapter.notifyDataSetChanged();
     }
 
     private void attachSelfAsTextWatcherToSearchBox() {
@@ -180,13 +119,13 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
 
         autoSuggestListView.setVisibility(View.VISIBLE);
         autoSuggestedProductList.clear();
-        autoSuggestedProductList.addAll(findMatchingProducts(charSequence.toString()));
+        autoSuggestedProductList.addAll(Product.findProductsByMatchingName(charSequence.toString()));
         clearAlreadyAddedProductsFrom(autoSuggestedProductList);
         autoSuggestAdapter.notifyDataSetChanged();
     }
 
     private void clearAlreadyAddedProductsFrom(List<Product> autoSuggestedProductList) {
-        autoSuggestedProductList.removeAll(this.toBuyProductList);
+//        autoSuggestedProductList.removeAll(this.toBuyProductList);
     }
 
     @Override

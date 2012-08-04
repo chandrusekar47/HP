@@ -1,13 +1,12 @@
 package com.thoughtworks.hp.adapters;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
-
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.models.Product;
+
+import java.util.List;
 
 public class ProductListAdapter extends AbstractItemListingAdapter<Product> {
 

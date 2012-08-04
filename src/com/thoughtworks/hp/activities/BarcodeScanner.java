@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import com.thoughtworks.hp.datastore.ProductTable;
 import com.thoughtworks.hp.models.Product;
 import com.thoughtworks.hp.zxing.integration.android.IntentIntegrator;
