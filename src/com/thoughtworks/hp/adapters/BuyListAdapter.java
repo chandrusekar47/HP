@@ -29,8 +29,7 @@ public class BuyListAdapter extends AbstractItemListingAdapter<ShoppingListProdu
     @Override
     protected void populateHolderElements(AbstractItemListingAdapter.ViewHolder holder, View convertView) {
         ((ShoppingListItemViewHolder) holder).productName = (TextView) convertView.findViewById(R.id.product_name);
-        ((ShoppingListItemViewHolder) holder).productCost = (TextView) convertView.findViewById(R.id.product_price);
-        ((ShoppingListItemViewHolder) holder).productQuantity = (TextView) convertView.findViewById(R.id.product_quantity);
+        ((ShoppingListItemViewHolder) holder).productQuantity = (TextView) convertView.findViewById(R.id.product_quantity_price_label);
         ((ShoppingListItemViewHolder) holder).amountAfterDiscount = (TextView) convertView.findViewById(R.id.discount_price);
     }
 
@@ -43,9 +42,6 @@ public class BuyListAdapter extends AbstractItemListingAdapter<ShoppingListProdu
     protected void populateDetailsForLineItem(AbstractItemListingAdapter.ViewHolder holder, ShoppingListProduct shoppingListProduct) {
         TextView productNameTextView = ((ShoppingListItemViewHolder) holder).productName;
         productNameTextView.setText(shoppingListProduct.getName());
-
-        TextView productCostTextView = ((ShoppingListItemViewHolder) holder).productCost;
-        productCostTextView.setText(Double.toString(shoppingListProduct.totalCost()));
 
         TextView textView= ((ShoppingListItemViewHolder) holder).productQuantity;
         String quantityMultipliedByUnitCount = shoppingListProduct.getQuantity() + " X " + Product.INDIAN_CURRENCY_SYMBOL + shoppingListProduct.getUnitCost();
