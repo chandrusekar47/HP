@@ -58,7 +58,6 @@
         <TextView android:id="@+id/shopping_lists_count_text"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="5 lists"
                   android:textColor="#FFFFFF"
                   android:layout_marginTop="2dp"
                   android:layout_marginLeft="8dp"
