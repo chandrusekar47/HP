@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import com.thoughtworks.hp.datastore.ProductTable;
 import com.thoughtworks.hp.models.Product;
 import com.thoughtworks.hp.zxing.integration.android.IntentIntegrator;
@@ -15,7 +15,7 @@ public class BarcodeScanner {
     private Activity activity;
     private static final String TAG = BarcodeScanner.class.getSimpleName();
 
-    public BarcodeScanner(Activity activity, Button scanButton) {
+    public BarcodeScanner(Activity activity, ImageView scanButton) {
         this.activity = activity;
         bindBarcodeScanningTo(scanButton);
     }
@@ -38,7 +38,7 @@ public class BarcodeScanner {
         return product;
     }
 
-    private void bindBarcodeScanningTo(Button scanButton) {
+    private void bindBarcodeScanningTo(ImageView scanButton) {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

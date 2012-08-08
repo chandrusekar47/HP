@@ -37,7 +37,7 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        setContentView(R.layout.add_product);
+        setContentView(R.layout.shopping_list_detail_listing);
 
         this.shoppingListId = getIntent().getLongExtra(ShoppingList.SHOPPING_LIST_ID, 1);
         shoppingListScreen = new ShoppingListPresenter(ShoppingList.findById(shoppingListId));
@@ -50,7 +50,7 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     }
 
     private void bindBarcodeScanner() {
-        barcodeScanner = new BarcodeScanner(this, (Button) this.findViewById(R.id.scan_button));
+        barcodeScanner = new BarcodeScanner(this, (ImageView) this.findViewById(R.id.scan_upc_button));
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -63,7 +63,7 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     private void initToBuyListView() {
         this.toBuyProductList.addAll(shoppingListScreen.shoppingListProducts());
         this.shoppingListProductAdapter = new BuyListAdapter(this, R.layout.product_line_item, toBuyProductList);
-        ListView toBuyProductListView = (ListView) this.findViewById(R.id.to_buy_product_view);
+        ListView toBuyProductListView = (ListView) this.findViewById(R.id.shopping_list_product_listing);
         toBuyProductListView.setAdapter(this.shoppingListProductAdapter);
     }
 
@@ -86,7 +86,7 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     }
 
     private void refreshShoppingListCost() {
-        costOfShoppingList = (TextView) findViewById(R.id.cost_of_shopping_list);
+        costOfShoppingList = (TextView) findViewById(R.id.list_detail_total_item_unit_value);
         costOfShoppingList.setText(shoppingListScreen.totalShoppingListCost());
     }
 
@@ -99,7 +99,7 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     private void resetAutoSuggestList() {
         autoSuggestedProductList.clear();
         autoSuggestAdapter.notifyDataSetChanged();
-        ((EditText)AddProductActivity.this.findViewById(R.id.searchBox)).setText("");
+        ((EditText)AddProductActivity.this.findViewById(R.id.search_product_box)).setText("");
         autoSuggestListView.setVisibility(View.INVISIBLE);
     }
 
@@ -110,7 +110,7 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     }
 
     private void attachSelfAsTextWatcherToSearchBox() {
-        ((EditText)this.findViewById(R.id.searchBox)).addTextChangedListener(this);
+        ((EditText)this.findViewById(R.id.search_product_box)).addTextChangedListener(this);
     }
 
     @Override

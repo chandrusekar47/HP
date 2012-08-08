@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.thoughtworks.hp.R;
 
 @SuppressLint({ "ParserError", "ViewConstructor" })
