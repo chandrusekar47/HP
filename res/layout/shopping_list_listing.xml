@@ -27,7 +27,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/header_back"
-                android:layout_alignTop="@id/add_new_shopping_list_button"
                 android:layout_alignParentLeft="true" />
         <ImageView
                 android:id="@+id/add_list_button_separator"
