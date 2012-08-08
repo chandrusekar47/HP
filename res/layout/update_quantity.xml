@@ -52,7 +52,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@color/cell_empty"
                         android:onClick="decrementQuantity"
                         android:src="@drawable/minus" />
 
@@ -72,7 +71,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@color/cell_empty"
                         android:onClick="incrementQuantity"
                         android:src="@drawable/symbol_add" />
                 </TableRow>

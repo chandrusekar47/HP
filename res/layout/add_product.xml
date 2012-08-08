@@ -19,13 +19,6 @@
               android:textSize="18sp"
               android:hint="Add an item.." />
 
-    <ImageButton android:id="@+id/add_button"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:src="@drawable/create_hyper_list"
-                 android:layout_marginTop="10sp"
-                    />
-
     <Button android:id="@+id/scan_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

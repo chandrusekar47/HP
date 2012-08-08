@@ -62,13 +62,13 @@ public class ShoppingListListingActivity extends CustomWindow {
     }
 
     private void bindEventsToAddNewList() {
-        ImageView addNewShoppingListButton = (ImageView) this.findViewById(R.id.add_new_shopping_list_button);
-        addNewShoppingListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNewShoppingListAndRefreshView();
-            }
-        });
+//        ImageView addNewShoppingListButton = (ImageView) this.findViewById(R.id.add_new_shopping_list_button);
+//        addNewShoppingListButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                addNewShoppingListAndRefreshView();
+//            }
+//        });
     }
 
     private void addNewShoppingListAndRefreshView() {

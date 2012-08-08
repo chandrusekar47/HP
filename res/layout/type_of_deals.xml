@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="#FFFFFF"
                 android:onClick="goToDeal"
                 android:src="@drawable/icon"
                 android:text="Shopping Lists" />
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="#FFFFFF"
                 android:onClick="goToDeal"
                 android:src="@drawable/electronics"
                 android:text="Deals" />
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="#FFFFFF"
                 android:onClick="goToDeal"
                 android:src="@drawable/handbag"
                 android:text="Shopping Lists" />
@@ -103,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="#FFFFFF"
                 android:onClick="goToDeal"
                 android:src="@drawable/groceries"
                 android:text="Deals" />
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="#FFFFFF"
                 android:onClick="goToDeal"
                 android:src="@drawable/home_decor"
                 android:text="Shopping Lists" />
@@ -159,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:background="#FFFFFF"
                 android:onClick="goToDeal"
                 android:src="@drawable/sports"
                 android:text="Deals" />

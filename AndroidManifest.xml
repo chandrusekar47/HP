@@ -12,24 +12,20 @@
     <application
         android:name=".HypercityApplication"
         android:icon="@drawable/hypercity"
-        android:label="@string/app_name"
-        android:theme="@style/CustomTheme" >
-        <activity android:name=".activities.AddProductActivity" >
+        android:label="@string/app_name">
+
+        <activity android:name=".activities.AddProductActivity" />
+        <activity android:name=".activities.ShoppingListListingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activities.ShoppingListListingActivity" >
-        </activity>
-        <activity android:name=".activities.AddQuantityActivity" >
-        </activity>
-        <activity android:name=".epromos.DragActivity" >
-        </activity>
+        <activity android:name=".activities.AddQuantityActivity" />
+        <activity android:name=".epromos.DragActivity" />
         <activity
             android:name=".HomePage"
             android:label="@string/title_activity_home_page" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".epromos.SelectDealActivity"></activity>
     </application>
