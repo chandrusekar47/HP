@@ -43,10 +43,21 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
         shoppingListScreen = new ShoppingListPresenter(ShoppingList.findById(shoppingListId));
 
         bindBarcodeScanner();
+        bindToolBarComponents();
         initToBuyListView();
         initAutoSuggestListView();
         refreshShoppingListCost();
         attachSelfAsTextWatcherToSearchBox();
+    }
+
+    private void bindToolBarComponents() {
+        ImageView backButton = (ImageView) this.findViewById(R.id.back_to_shopping_listing_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddProductActivity.this.finish();
+            }
+        });
     }
 
     private void bindBarcodeScanner() {
