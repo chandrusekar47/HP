@@ -42,7 +42,7 @@ public class ShoppingListPresenter {
     }
 
     public void addSelectedProductToShoppingList(Product product) {
-        ShoppingListProduct.create(new ShoppingListProduct(product, shoppingList.getId()));
+        this.shoppingList.addNewProduct(product);
         this.shoppingListProducts = shoppingList.shoppingListProducts();
     }
 }

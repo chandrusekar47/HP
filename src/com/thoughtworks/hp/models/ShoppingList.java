@@ -68,10 +68,19 @@ public class ShoppingList {
     }
 
     private void loadShoppingListProductsIfNotLoaded() {
-        if(shoppingListProducts == null) shoppingListProducts = shoppingListProducts();
+        if(shoppingListProducts == null) reloadSelf();
     }
 
     public static ShoppingList findById(long shoppingListId) {
         return shoppingListTable.findById(shoppingListId);
+    }
+
+    public void addNewProduct(Product product) {
+        ShoppingListProduct.create(new ShoppingListProduct(product, id));
+        reloadSelf();
+    }
+
+    private void reloadSelf() {
+        shoppingListProducts = shoppingListProducts();
     }
 }
