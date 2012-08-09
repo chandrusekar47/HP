@@ -16,9 +16,7 @@ public class BuyListAdapter extends AbstractItemListingAdapter<ShoppingListProdu
 
     private static class ShoppingListItemViewHolder extends ViewHolder {
         TextView productName;
-        TextView productCost;
         TextView productQuantity;
-        TextView amountAfterDiscount;
     }
 
     public BuyListAdapter(Context context, int layout, List<ShoppingListProduct> shoppingListProducts) {
@@ -30,7 +28,6 @@ public class BuyListAdapter extends AbstractItemListingAdapter<ShoppingListProdu
     protected void populateHolderElements(AbstractItemListingAdapter.ViewHolder holder, View convertView) {
         ((ShoppingListItemViewHolder) holder).productName = (TextView) convertView.findViewById(R.id.product_name);
         ((ShoppingListItemViewHolder) holder).productQuantity = (TextView) convertView.findViewById(R.id.product_quantity_price_label);
-        ((ShoppingListItemViewHolder) holder).amountAfterDiscount = (TextView) convertView.findViewById(R.id.discount_price);
     }
 
     @Override

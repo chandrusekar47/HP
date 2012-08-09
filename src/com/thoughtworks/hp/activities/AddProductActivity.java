@@ -51,6 +51,21 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     }
 
     private void bindToolBarComponents() {
+        bindBackButtonOnToolBar();
+        bindToggleButtonOnToolBar();
+    }
+
+    private void bindToggleButtonOnToolBar() {
+        ImageView backButton = (ImageView) this.findViewById(R.id.add_product_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleSearchBoxVisibility();
+            }
+        });
+    }
+
+    private void bindBackButtonOnToolBar() {
         ImageView backButton = (ImageView) this.findViewById(R.id.back_to_shopping_listing_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +77,12 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
 
     private void bindBarcodeScanner() {
         barcodeScanner = new BarcodeScanner(this, (ImageView) this.findViewById(R.id.scan_upc_button));
+    }
+
+    private void toggleSearchBoxVisibility() {
+        View searchBox = this.findViewById(R.id.search_product_box);
+        int visibility = searchBox.getVisibility();
+        searchBox.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
