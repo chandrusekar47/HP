@@ -1,18 +1,18 @@
 package com.thoughtworks.hp.activities;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.thoughtworks.hp.CustomWindow;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.datastore.ProductAvailabilityService;
 import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 
 import java.text.SimpleDateFormat;
 
-public class AddQuantityActivity extends CustomWindow {
+public class AddQuantityActivity extends Activity {
 
 	EditText editText;
 	private long productId;

@@ -1,12 +1,12 @@
 package com.thoughtworks.hp.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-import com.thoughtworks.hp.CustomWindow;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.ShoppingListListingAdapter;
 import com.thoughtworks.hp.datastore.ShoppingListTable;
@@ -16,7 +16,7 @@ import com.thoughtworks.hp.presenters.ShoppingListListingPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingListListingActivity extends CustomWindow {
+public class ShoppingListListingActivity extends Activity {
 
     private ShoppingListTable shoppingListTable;
     private ListView shoppingListsListingView;

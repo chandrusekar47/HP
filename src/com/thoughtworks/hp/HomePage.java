@@ -1,12 +1,13 @@
 package com.thoughtworks.hp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.thoughtworks.hp.activities.ShoppingListListingActivity;
 import com.thoughtworks.hp.epromos.SelectDealActivity;
 
-public class HomePage extends CustomWindow {
+public class HomePage extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

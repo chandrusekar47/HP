@@ -1,12 +1,12 @@
 package com.thoughtworks.hp.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.*;
-import com.thoughtworks.hp.CustomWindow;
 import com.thoughtworks.hp.R;
 import com.thoughtworks.hp.adapters.BuyListAdapter;
 import com.thoughtworks.hp.adapters.ProductListAdapter;
@@ -18,7 +18,7 @@ import com.thoughtworks.hp.presenters.ShoppingListPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddProductActivity extends CustomWindow implements TextWatcher {
+public class AddProductActivity extends Activity implements TextWatcher {
 
     private ShoppingListPresenter shoppingListScreen;
 
