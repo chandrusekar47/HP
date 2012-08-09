@@ -48,6 +48,7 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
         initAutoSuggestListView();
         refreshShoppingListCost();
         attachSelfAsTextWatcherToSearchBox();
+        if(shoppingListScreen.totalDistinctProducts() == 0) makeVisible(this.findViewById(R.id.search_product_box));
     }
 
     private void bindToolBarComponents() {
@@ -82,7 +83,18 @@ public class AddProductActivity extends CustomWindow implements TextWatcher {
     private void toggleSearchBoxVisibility() {
         View searchBox = this.findViewById(R.id.search_product_box);
         int visibility = searchBox.getVisibility();
-        searchBox.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+        if(visibility == View.VISIBLE)
+            makeViewBeGone(searchBox);
+        else
+            makeVisible(searchBox);
+    }
+
+    private void makeVisible(View viewComponent) {
+        viewComponent.setVisibility(View.VISIBLE);
+    }
+
+    private void makeViewBeGone(View viewComponent) {
+        viewComponent.setVisibility(View.GONE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

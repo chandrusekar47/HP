@@ -34,7 +34,18 @@ public class ShoppingListListingActivity extends CustomWindow {
         initDependencies();
         updateTotalListCountOnView();
         bindEventsToAddNewList();
+        bindBackButton();
         initListingView();
+    }
+
+    private void bindBackButton() {
+        View backToHomeButton = this.findViewById(R.id.back_to_home_button);
+        backToHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShoppingListListingActivity.this.finish();
+            }
+        });
     }
 
     private void updateTotalListCountOnView() {

@@ -15,17 +15,14 @@
         android:label="@string/app_name">
 
         <activity android:name=".activities.AddProductActivity" />
-        <activity android:name=".activities.ShoppingListListingActivity">
+        <activity android:name=".activities.ShoppingListListingActivity" />
+        <activity android:name=".activities.AddQuantityActivity" />
+        <activity android:name=".epromos.DragActivity" />
+        <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activities.AddQuantityActivity" />
-        <activity android:name=".epromos.DragActivity" />
-        <activity
-            android:name=".HomePage"
-            android:label="@string/title_activity_home_page" >
         </activity>
         <activity android:name=".epromos.SelectDealActivity"></activity>
     </application>

@@ -2,7 +2,6 @@ package com.thoughtworks.hp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import com.thoughtworks.hp.datastore.ProductTable;
@@ -21,15 +20,13 @@ public class BarcodeScanner {
     }
 
     public Product fetchProductFromBarcodeData(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         Product productToReturn = null;
-        if (scanResult != null) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult.getContents() != null) {
             String barcodeId = scanResult.getContents();
-            Log.d(TAG, "Found Scan Result as " + barcodeId);
             productToReturn = findProductFromBarcodeId(barcodeId);
         }
 
-        if (productToReturn == null) throw new RuntimeException("");
         return productToReturn;
     }
 
