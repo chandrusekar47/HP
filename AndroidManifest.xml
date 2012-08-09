@@ -19,7 +19,7 @@
         <activity android:name=".activities.ShoppingListListingActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.AddQuantityActivity" android:screenOrientation="portrait" />
         <activity android:name=".epromos.DragActivity" android:screenOrientation="portrait" />
-        <activity android:name=".HomePage">
+        <activity android:name=".HomePage" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
