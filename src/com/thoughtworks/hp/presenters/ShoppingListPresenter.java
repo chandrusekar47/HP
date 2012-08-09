@@ -29,20 +29,38 @@ public class ShoppingListPresenter {
         return shoppingList.getName();
     }
 
-    public int totalDistinctProducts() {
+    public int totalDistinctProductsCount() {
         return shoppingList.totalDistinctProducts();
+    }
+
+    public String totalDistinctProductsLabel() {
+        return generateItemLabelForCount(totalDistinctProductsCount());
+    }
+
+    private String generateItemLabelForCount(int itemCount) {
+        StringBuffer label = new StringBuffer(Integer.toString(itemCount));
+        label.append(multipleItems(itemCount) ? " Items" : " Item");
+        return label.toString();
     }
 
     public int totalProductUnitCount() {
         return shoppingList.totalProductUnitCount();
     }
 
-    public String totalShoppingListCost() {
-        return Double.toString(shoppingList.totalCost());
+    public String totalProductsUnitCountLabel() {
+        return generateItemLabelForCount(totalProductUnitCount());
+    }
+
+    public String totalShoppingListCostLabel() {
+        return Product.INDIAN_CURRENCY_SYMBOL + " " + Double.toString(shoppingList.totalCost());
     }
 
     public void addSelectedProductToShoppingList(Product product) {
         this.shoppingList.addNewProduct(product);
         this.shoppingListProducts = shoppingList.shoppingListProducts();
+    }
+
+    private boolean multipleItems(int itemCount) {
+        return itemCount > 1;
     }
 }

@@ -33,6 +33,8 @@ public class AddProductActivity extends Activity implements TextWatcher {
 	private BarcodeScanner barcodeScanner;
 
     private TextView costOfShoppingList;
+    private TextView distinctProductCountLabel;
+    private TextView totalProductUnitCountLabel;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -46,9 +48,9 @@ public class AddProductActivity extends Activity implements TextWatcher {
         bindToolBarComponents();
         initToBuyListView();
         initAutoSuggestListView();
-        refreshShoppingListCost();
+        refreshProductRelatedUIElements();
         attachSelfAsTextWatcherToSearchBox();
-        if(shoppingListScreen.totalDistinctProducts() == 0) makeVisible(this.findViewById(R.id.search_product_box));
+        if(shoppingListScreen.totalDistinctProductsCount() == 0) makeVisible(this.findViewById(R.id.search_product_box));
     }
 
     private void bindToolBarComponents() {
@@ -129,14 +131,20 @@ public class AddProductActivity extends Activity implements TextWatcher {
         resetCompleteView();
     }
 
-    private void refreshShoppingListCost() {
-        costOfShoppingList = (TextView) findViewById(R.id.list_detail_total_item_unit_value);
-        costOfShoppingList.setText(shoppingListScreen.totalShoppingListCost());
+    private void refreshProductRelatedUIElements() {
+        costOfShoppingList = (TextView) findViewById(R.id.total_amount_value_text);
+        costOfShoppingList.setText(shoppingListScreen.totalShoppingListCostLabel());
+
+        distinctProductCountLabel = (TextView) findViewById(R.id.list_detail_item_list_count_text);
+        distinctProductCountLabel.setText(shoppingListScreen.totalDistinctProductsLabel());
+
+        totalProductUnitCountLabel = (TextView) findViewById(R.id.list_detail_total_item_unit_value);
+        totalProductUnitCountLabel.setText(shoppingListScreen.totalProductsUnitCountLabel());
     }
 
     private void resetCompleteView() {
         resetToBuyList();
-        refreshShoppingListCost();
+        refreshProductRelatedUIElements();
         resetAutoSuggestList();
     }
 
