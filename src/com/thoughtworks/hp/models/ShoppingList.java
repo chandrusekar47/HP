@@ -83,4 +83,11 @@ public class ShoppingList {
     private void reloadSelf() {
         shoppingListProducts = shoppingListProducts();
     }
+
+    public void toggleCompletenessOfProductAt(long position) {
+        ShoppingListProduct shoppingListProduct = shoppingListProducts.get((int) position);
+        shoppingListProduct.toggleFulfilled();
+        shoppingListProduct.save();
+        reloadSelf();
+    }
 }

@@ -68,6 +68,6 @@ public class AddQuantityActivity extends Activity {
     }
 
     private void updateQuantityInDatabase() {
-        new ShoppingListProductTable().updateQuantityForProduct(productId, getQuantityFromEditBox());
+//        new ShoppingListProductTable().updateQuantityForProduct(productId, getQuantityFromEditBox());
     }
 }

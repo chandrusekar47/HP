@@ -29,7 +29,7 @@ public class ShoppingListListingAdapter extends AbstractItemListingAdapter<Shopp
     }
 
     @Override
-    protected void populateDetailsForLineItem(AbstractItemListingAdapter.ViewHolder holder, ShoppingList shoppingList) {
+    protected void populateDetailsForLineItem(ViewHolder holder, ShoppingList shoppingList, View convertView) {
         TextView shoppingListName = ((ShoppingListViewHolder)holder).shoppingListName;
         shoppingListName.setText(shoppingList.getName());
     }

@@ -9,10 +9,6 @@ import java.util.List;
 
 public class ShoppingListPresenter {
 
-    private String shoppingListName;
-    private int totalDistinctItems;
-    private double totalShoppingListCost;
-    private int totalUnitCount;
     private List<ShoppingListProduct> shoppingListProducts = new ArrayList<ShoppingListProduct>();
 
     private ShoppingList shoppingList;
@@ -62,5 +58,9 @@ public class ShoppingListPresenter {
 
     private boolean multipleItems(int itemCount) {
         return itemCount > 1;
+    }
+
+    public void toggleCompletenessForItemAt(long position) {
+        shoppingList.toggleCompletenessOfProductAt(position);
     }
 }

@@ -34,7 +34,7 @@ public abstract class AbstractItemListingAdapter<T> extends ArrayAdapter<T> {
         holder = (ViewHolder) convertView.getTag();
 
         T item = itemList.get(position);
-        if(item != null) populateDetailsForLineItem(holder, item);
+        if(item != null) populateDetailsForLineItem(holder, item, convertView);
 
         return convertView;
     }
@@ -54,7 +54,7 @@ public abstract class AbstractItemListingAdapter<T> extends ArrayAdapter<T> {
 
     protected abstract ViewHolder getViewHolder();
 
-    protected abstract  void populateDetailsForLineItem(ViewHolder holder, T item);
+    protected abstract  void populateDetailsForLineItem(ViewHolder holder, T item, View convertView);
 
     @Override
     public int getCount() {

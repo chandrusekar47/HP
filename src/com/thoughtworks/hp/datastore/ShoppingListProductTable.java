@@ -30,7 +30,7 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
 
     private static class ShoppingListProductCursor extends SQLiteCursor {
 
-        private static final String FIELD_LIST = " product_id, shopping_list_id, quantity ";
+        private static final String FIELD_LIST = " product_id, shopping_list_id, quantity, fulfilled ";
         private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM "+ TABLE_NAME;
         public static String FIND_QUANTITY_BY_PRODUCT_AND_SHOPPINGLIST = "SELECT quantity FROM "+ TABLE_NAME+ " WHERE product_id=? AND shopping_list_id = ?";
         public static final String SHOPPING_LIST_PRODUCTS_QUERY = "SELECT " + FIELD_LIST + " FROM "+ TABLE_NAME + " WHERE shopping_list_id = ?";
@@ -57,8 +57,12 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
             return getInt(getColumnIndexOrThrow("quantity"));
         }
 
+        private int getFulfilled() {
+            return getInt(getColumnIndexOrThrow("fulfilled"));
+        }
+
         public ShoppingListProduct getShoppingListProduct() {
-            return new ShoppingListProduct(getProductId(), getShoppingListId(), getQuantity());
+            return new ShoppingListProduct(getProductId(), getShoppingListId(), getQuantity(), getFulfilled());
         }
     }
 
@@ -115,13 +119,14 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
         }
         return newShoppingListProduct;
     }
-    public void updateQuantityForProduct(long productId, int quantity) {
+    public void update(ShoppingListProduct product) {
         SQLiteDatabase writableDatabase = database.getWritableDatabase();
         writableDatabase.beginTransaction();
         try {
             ContentValues dbValues = new ContentValues();
-            dbValues.put("quantity", quantity);
-            writableDatabase.update(TABLE_NAME, dbValues, "product_id =" + productId, null);
+            dbValues.put("quantity", product.getQuantity());
+            dbValues.put("fulfilled", product.getFulfilled());
+            writableDatabase.update(TABLE_NAME, dbValues, "product_id =" + product.getProductId(), null);
             writableDatabase.setTransactionSuccessful();
         } catch (SQLException sqle) {
             Log.e(TAG, "Could not update shopping list product. Exception is :" + sqle.getMessage());

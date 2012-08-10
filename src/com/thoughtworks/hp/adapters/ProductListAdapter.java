@@ -33,7 +33,7 @@ public class ProductListAdapter extends AbstractItemListingAdapter<Product> {
     }
 
     @Override
-    protected void populateDetailsForLineItem(AbstractItemListingAdapter.ViewHolder holder, Product product) {
+    protected void populateDetailsForLineItem(ViewHolder holder, Product product, View convertView) {
         TextView productNameTextView = ((ProductViewHolder)holder).productName;
         productNameTextView.setText(product.getName());
 

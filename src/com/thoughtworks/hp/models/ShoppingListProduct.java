@@ -4,6 +4,9 @@ import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 
 public class ShoppingListProduct {
 
+    private static int FULLFILLED_FLAG = 1;
+    private static int PENDING_FLAG = 0;
+
     private long shoppingListId;
     private long productId;
     private int quantity;
@@ -23,9 +26,10 @@ public class ShoppingListProduct {
         this.quantity = 1;
     }
 
-    public ShoppingListProduct(long productId, long shoppingListId, int quantity) {
+    public ShoppingListProduct(long productId, long shoppingListId, int quantity, int fulfilled) {
         this(productId, shoppingListId);
         this.quantity = quantity;
+        this.fulfilled = fulfilled;
     }
 
     public ShoppingListProduct(Product product, long shoppingListId) {
@@ -55,8 +59,8 @@ public class ShoppingListProduct {
         return Product.findById(productId);
     }
 
-    public void productFulfilled(int fulfilled) {
-        this.fulfilled = fulfilled;
+    public void toggleFulfilled() {
+        this.fulfilled = this.fulfilled == PENDING_FLAG ? FULLFILLED_FLAG : PENDING_FLAG;
     }
 
     public double totalCost() {
@@ -68,12 +72,20 @@ public class ShoppingListProduct {
         return shoppingListProductTable.create(newShoppingListProduct);
     }
 
-    public static double findQuantityOnProductAndShoppingList(long shoppingListId, long productId) {
-        return shoppingListProductTable.findQuantityOnProductAndShoppingList(shoppingListId, productId);
-    }
-
     public String getName() {
         if(product == null) this.product = product();
         return product.getName();
+    }
+
+    public void save() {
+        shoppingListProductTable.update(this);
+    }
+
+    public int getFulfilled() {
+        return fulfilled;
+    }
+
+    public boolean isFulfilled() {
+        return fulfilled == FULLFILLED_FLAG;
     }
 }
