@@ -177,7 +177,9 @@ public class AddProductActivity extends Activity implements TextWatcher {
     }
 
     private void clearAlreadyAddedProductsFrom(List<Product> autoSuggestedProductList) {
-//        autoSuggestedProductList.removeAll(this.toBuyProductList);
+        for(ShoppingListProduct shoppingListProduct : toBuyProductList) {
+            autoSuggestedProductList.remove(shoppingListProduct.product());
+        }
     }
 
     @Override
