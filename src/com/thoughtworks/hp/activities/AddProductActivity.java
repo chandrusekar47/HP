@@ -111,13 +111,13 @@ public class AddProductActivity extends Activity implements TextWatcher {
         this.shoppingListProductAdapter = new BuyListAdapter(this, R.layout.product_line_item, toBuyProductList);
         ListView toBuyProductListView = (ListView) this.findViewById(R.id.shopping_list_product_listing);
         toBuyProductListView.setAdapter(this.shoppingListProductAdapter);
-        toBuyProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                toggleItemsCompletenessByChangingColor(position);
-                shoppingListProductAdapter.notifyDataSetChanged();
-            }
-        });
+//        toBuyProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                toggleItemsCompletenessByChangingColor(position);
+//                shoppingListProductAdapter.notifyDataSetChanged();
+//            }
+//        });
     }
 
     private void toggleItemsCompletenessByChangingColor(long position) {
