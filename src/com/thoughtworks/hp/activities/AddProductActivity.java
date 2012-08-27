@@ -16,6 +16,8 @@ import com.thoughtworks.hp.models.ShoppingListProduct;
 import com.thoughtworks.hp.presenters.ShoppingListPresenter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AddProductActivity extends Activity implements TextWatcher {
@@ -115,7 +117,6 @@ public class AddProductActivity extends Activity implements TextWatcher {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 toggleItemsCompletenessByChangingColor(position);
-                shoppingListProductAdapter.notifyDataSetChanged();
             }
         });
     }
