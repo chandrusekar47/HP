@@ -1,5 +1,6 @@
 package com.thoughtworks.hp.models;
 
+import com.thoughtworks.hp.datastore.ProductTable;
 import com.thoughtworks.hp.datastore.ShoppingListProductTable;
 
 public class ShoppingListProduct {

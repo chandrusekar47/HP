@@ -45,8 +45,8 @@ public class BuyListAdapter extends AbstractItemListingAdapter<ShoppingListProdu
         String quantityMultipliedByUnitCount = shoppingListProduct.getQuantity() + " X " + Product.INDIAN_CURRENCY_SYMBOL + shoppingListProduct.getUnitCost();
         textView.setText(quantityMultipliedByUnitCount);
 
-        if(shoppingListProduct.isFulfilled())
-            convertView.setBackgroundColor(Color.rgb(220,220,220));
+        int backgroundColor = shoppingListProduct.isFulfilled() ? Color.rgb(210, 210, 210) : Color.rgb(237,237,237);
+        convertView.setBackgroundColor(backgroundColor);
     }
 
 }
