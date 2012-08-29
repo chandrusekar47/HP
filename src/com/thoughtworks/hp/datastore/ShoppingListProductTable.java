@@ -126,7 +126,7 @@ public class ShoppingListProductTable implements Table<ShoppingListProduct> {
             ContentValues dbValues = new ContentValues();
             dbValues.put("quantity", product.getQuantity());
             dbValues.put("fulfilled", product.getFulfilled());
-            writableDatabase.update(TABLE_NAME, dbValues, "product_id =" + product.getProductId(), null);
+            writableDatabase.update(TABLE_NAME, dbValues, "product_id =" + product.getProductId() + " and shopping_list_id=" + product.getShoppingListId(), null);
             writableDatabase.setTransactionSuccessful();
         } catch (SQLException sqle) {
             Log.e(TAG, "Could not update shopping list product. Exception is :" + sqle.getMessage());
