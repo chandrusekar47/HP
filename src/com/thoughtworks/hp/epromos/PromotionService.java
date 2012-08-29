@@ -10,41 +10,41 @@ public class PromotionService {
 	public List<EPromo> getCurrentPromotions() {
 		List<EPromo> returnList = new ArrayList<EPromoFactory.EPromo>();
 		returnList.add(EPromoFactory.createPromo(R.drawable._2, 20, "9789380658674",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._2, 20, "9789380658674",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._3, 20, "1236",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._4, 20, "9788184041804",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._5, 20, "1234",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._3, 20, "1236",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._4, 20, "9788184041804",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._5, 20, "1234",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._4, 20, "9788184041804",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._3, 20, "1236",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._2, 20, "9789380658674",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._3, 20, "1236",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._4, 20, "9788184041804",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._2, 20, "9789380658674",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._3, 20, "1236",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._4, 20, "9788184041804",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._5, 20, "1234",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		returnList.add(EPromoFactory.createPromo(R.drawable._4, 20, "9788184041804",
-				"Sample Description for the sake of it"));
+				"Sample product description"));
 		return returnList;
 	}
 }

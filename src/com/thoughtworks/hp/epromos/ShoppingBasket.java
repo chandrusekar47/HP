@@ -13,7 +13,7 @@ import com.thoughtworks.hp.R;
 public class ShoppingBasket extends ImageView implements DragSource, DropTarget {
 	private long shoppingListID;
 
-	public ShoppingBasket(Context context, long shoppingListID) {
+    public ShoppingBasket(Context context, long shoppingListID) {
 		super(context);
 		this.shoppingListID = shoppingListID;
 	}
