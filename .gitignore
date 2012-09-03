@@ -25,7 +25,8 @@ gen/
 local.properties
 .DS_Store
 
-#IDE (intellij) settings files
+#IDE (intellij, eclipse) settings files
 HP.iml
 HP.ipr
 HP.iws
+.settings/
