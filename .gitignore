@@ -1,6 +1,7 @@
 # built application files
 *.apk
 *.ap_
+out/*
 
 # files for the dex VM
 *.dex
@@ -23,3 +24,8 @@ gen/
 # Local configuration file (sdk path, etc)
 local.properties
 .DS_Store
+
+#IDE (intellij) settings files
+HP.iml
+HP.ipr
+HP.iws
